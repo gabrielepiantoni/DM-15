@@ -163,8 +163,6 @@ The **World Bank** is an international financial institution that provides **loa
 #### Summary
 
 In summary, the **World Bank** leverages its extensive data resources to support global development goals, enabling **informed decision-making** and driving efforts to reduce **poverty** and improve **living standards**.
-<<<<<<< HEAD
-=======
 
 # Data manipulation
 
