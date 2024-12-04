@@ -297,6 +297,22 @@ summary_table <- data.frame(
 
 kable(summary_table, format = "markdown", col.names = c("Dataset", "Rows", "Columns"))
 ```
-## Cleaned datasets description
+
+# Synthetic project Outline
+
+*Objective*
+
+The objective of this project is to study the correlation between the components that influence the TFP1 (Total Factor Productivity) and GDP (Gross Domestic Product) growth between different countries over the last twenty years.
+
+More in detail, economic theory has long emphasised the centrality of TFP growth for the long-term expansion of the economy. Taking this as our starting point, we found it interesting to investigate whether and how some of the elements considered to drive TFP growth have shaped the performance of the economy over the past two decades.
+
+*Project Structure*
+
+To pursue our objective, we decided to structure our project as follows.
+
+First, for the sake of completeness, by referring to the data contained in the ‘GDP DataSet’ we will assess the long-standing theorised correlation between TFP and GDP.
+
+Subsequently, using the Education and Research datasets, we will highlight whether and what relationships exist between the evidence in the datasets and TFP’s trends.
+
 
 
