@@ -18,6 +18,7 @@ here :: i_am("DM-15.Rproj")
 library(here)
 library(vroom)
 library(tidyverse)
+library(knitr)
 ```
 
 ##Data Import
@@ -204,12 +205,8 @@ PRODUCTIVITY <- GDPMFP |>
 ```{r}
 EDUSPEND |> distinct(Indicateur)
 ```
+
 ```{r}
-SUPSPEND <- EDUSPEND |> filter(Indicateur=="Dépenses de l'enseignement supérieur") |>
-  pivot_wider(
-  names_from = "Mesure",
-  values_from = "OBS_VALUE"
-)
 TOTALEDUSPEND <- EDUSPEND|>filter(Indicateur=="Dépenses d'éducation")|>pivot_wider(
   names_from = "Mesure",
   values_from = "OBS_VALUE"
@@ -277,3 +274,29 @@ GROSPEND |> distinct(Indicateur)
 ```
 
 After that, given that the same indicator has more than one type of measure and the values of the different measures were displayed in the same column with another column indicating what type of measure it was, we used pivot-wider to have only one type of variable per column.
+
+# Data description 
+## Synthesis
+
+```{r}
+datasets <- list(
+  GDP = GDP,
+  MFP = MFP,
+  PRODUCTIVITY = PRODUCTIVITY,
+  RSC = RSC,
+  SPENDRD = SPENDRD,
+  STATERSC = STATERSC,
+  TOTALEDUSPEND = TOTALEDUSPEND,
+  TRIAD = TRIAD
+)
+
+summary_table <- data.frame(
+  Rows = sapply(datasets, nrow),
+  Columns = sapply(datasets, ncol)
+)
+
+kable(summary_table, format = "markdown", col.names = c("Dataset", "Rows", "Columns"))
+```
+## Cleaned datasets description
+
+
