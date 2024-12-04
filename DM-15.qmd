@@ -163,6 +163,36 @@ The **World Bank** is an international financial institution that provides **loa
 
 In summary, the **World Bank** leverages its extensive data resources to support global development goals, enabling **informed decision-making** and driving efforts to reduce **poverty** and improve **living standards**.
 
+# Data manipulation
 
+## Selecting variables
 
+```{r}
+EDUSPEND <- EDUSPEND|>select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VALUE)
+EDUTAIN <- EDUTAIN|>select(-c(`Country Code`, `Series Name`, `Series Code`))
+GDPMFP <- GDPMFP |> select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VALUE)
+GROSPEND <- GROSPEND |> select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VALUE)
+``` 
+
+## Spliting tables
+
+Creating different tables considering the various indicators. Then, we have created one column per type of measure.
+
+```{r}
+GDP<-GDPMFP |> filter(Indicateur=="Produit intérieur brut (PIB)") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+MFP <- GDPMFP|>filter(Indicateur=="Productivité multifactorielle")|>pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+PRODUCTIVITY <- GDPMFP |> 
+  filter(Indicateur=="PIB par heure travaillée")|>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+```
 
