@@ -26,17 +26,19 @@ GDPMFP<-vroom(here("PROJET","GDP & MFP DATASETS","GDP, MFP and GDP per hour work
 GROSPEND<-vroom(here("PROJET","R&D DATA SETS","Gross domestic spending in R&D, Researchers per countries & Tridic Patent families (OECD).csv"))
 ```
 
-##Github link
+## Github link
 
 https://github.com/gabrielepiantoni/DM-15.git
 
-##Sources' Links
+## Sources' Links
 
-OECD: https://data-explorer.oecd.org
+*OECD: https://data-explorer.oecd.org*
 
 In order to use to get the data from OECD Explore you have to select from the panel on the left the following;
 - Frequency & Time: From 1914 to 2022
 - Country: Select All the Countries
 - Indicator:  Education spending, Gross domestic product (GDP), GDP per hour worked, Multifactor productivity, Researchers, Gross domestic spending on R&D, Triadic patent
 
-World Bank: https://databank.worldbank.org/source/world-development-indicators
+*World Bank: https://data.worldbank.org/indicator/SE.TER.CUAT.ST.ZS?end=2023&start=2023&view=bar*
+
+Click on CSV in the download section of the bottom right corner of the page
