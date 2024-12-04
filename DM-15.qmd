@@ -8,11 +8,13 @@ format: html
 ## Here i am
 
 ```{r}
+#| message: false
 here :: i_am("DM-15.Rproj")
 ```
 # Packages
 
 ```{r}
+#| message: false
 library(here)
 library(vroom)
 library(tidyverse)
@@ -20,6 +22,7 @@ library(tidyverse)
 
 ##Data Import
 ```{r}
+#| message: false
 EDUSPEND<-vroom(here("PROJET","EDUCATION DATA SETS","Education spending (OECD).csv"))
 EDUTAIN<-vroom(here("PROJET","EDUCATION DATA SETS","Educational attainment, at least completed short-cycle tertiary, population 25+, total (World Bank).csv"))
 GDPMFP<-vroom(here("PROJET","GDP & MFP DATASETS","GDP, MFP and GDP per hour worked (OECD).csv"))
@@ -30,15 +33,136 @@ GROSPEND<-vroom(here("PROJET","R&D DATA SETS","Gross domestic spending in R&D, R
 
 https://github.com/gabrielepiantoni/DM-15.git
 
-## Sources' Links
+# Sources' Links
 
-*OECD: https://data-explorer.oecd.org*
+## OECD
 
-In order to use to get the data from OECD Explore you have to select from the panel on the left the following;
-- Frequency & Time: From 1914 to 2022
-- Country: Select All the Countries
-- Indicator:  Education spending, Gross domestic product (GDP), GDP per hour worked, Multifactor productivity, Researchers, Gross domestic spending on R&D, Triadic patent
+- [OECD Data Explorer](https://data-explorer.oecd.org)
 
-*World Bank: https://data.worldbank.org/indicator/SE.TER.CUAT.ST.ZS?end=2023&start=2023&view=bar*
+  To access the data from **OECD Explore**, you will need to select the following options from the panel on the left:
+  - **Frequency & Time**: From 1914 to 2022
+  - **Country**: Select all available countries
+  - **Indicator**: 
+    - Education Spending
+    - Gross Domestic Product (GDP)
+    - GDP per Hour Worked
+    - Multifactor Productivity
+    - Researchers
+    - Gross Domestic Spending on R&D
+    - Triadic Patent
 
-Click on CSV in the download section of the bottom right corner of the page
+## World Bank
+
+- [World Bank Indicator for Educational Attainment](https://data.worldbank.org/indicator/SE.TER.CUAT.ST.ZS?end=2023&start=2023&view=bar)
+
+  To download the data, click on **CSV** in the download section at the bottom right corner of the page.
+
+
+
+
+
+# Datasets and Sources
+
+## Datasets
+
+### Education Data Sets
+
+- **Education Spending** (source: OECD Data Explorer2; 2005-2020):
+  Expenditure in education - divided into primary, secondary and tertiary - in both %GDP and US$/Student ratio.
+
+- **Educational attainment**, at least completed short-cycle tertiary, population 25+, total (source: World Bank; 2005-2022):
+  Percentage of adults over 25 who have completed a first cycle of tertiary education.
+
+### GDP and MFP Datasets
+
+- **Gross Domestic Product** (source: OECD Data Explorer; 1970-2022):
+  Gross Domestic Product in US$ and US$/capita ratio.
+
+- **MFP** (source: OECD Data Explorer; 1985-2022):
+  Multifactor productivity (i.e. TFP) expressed in annual growth rates (%) and current year value compared to 2015.
+
+- **GDP per hour worked** (source: OECD Data Explorer; 1970-2022):
+  Ratio of GDP to hours worked in both US$ and current year value relative to 2015.
+
+### R&D Dataset
+
+- **Gross Domestic Spending on R&D** (source: OECD Data Explorer; 1981-2022):
+  Gross domestic spending on R&D measured in Million US dollar and percentage of GDP.
+
+- **Researchers per countries** (source: OECD Data Explorer; 1981-2022):
+  Number of researchers per country, count per head and ratio per 1000 people employed.
+
+- **Triadic Patent families** (source: OECD Data Explorer; 1981-2022):
+  Triadic patent families are a set of patents filed at three of these major patent offices: the European Patent Office (EPO), the Japan Patent Office (JPO), and the United States Patent and Trademark Office (USPTO). Triadic patent family counts are attributed to the country of residence of the inventor and to the date when the patent was first registered.
+  
+## Sources 
+
+### The Organisation for Economic Co-operation and Development (OECD)
+
+The **Organisation for Economic Co-operation and Development (OECD)** is an international organization composed of 38 member countries, established in 1961 to promote economic growth, trade, and global development. Its primary goal is to foster policies that improve the economic and social well-being of people worldwide.
+
+#### Activities in Data Collection and Display
+
+##### Data Collection
+
+- The OECD collects a wide range of data from member and non-member countries on topics such as **economic performance**, **education**, **labor markets**, **trade**, **health**, **energy**, and **environmental sustainability**.
+- The organization relies on **standardized methodologies** to ensure data comparability across countries.
+
+##### Analysis and Reporting
+
+- The OECD analyzes the collected data to identify trends, develop **policy recommendations**, and support evidence-based decision-making.
+- It publishes its findings in **reports**, **working papers**, and annual flagship publications such as:
+  - **Economic Outlook**
+  - **Education at a Glance**
+  - **Better Life Index**
+
+##### Interactive Platforms
+
+- The OECD provides tools and platforms like **OECD.Stat** and the **OECD Data Portal**, which allow users to access, visualize, and download data in **interactive formats**.
+- These platforms enable policymakers, researchers, and the public to explore **cross-country comparisons** and detailed statistical insights.
+
+##### Policy Development
+
+- The organization uses data to guide **policy frameworks** and support collaboration among countries on pressing global issues such as **climate change**, **inequality**, and **digital transformation**.
+
+#### Summary
+
+In summary, the **OECD** plays a critical role in collecting high-quality, comparable data and leveraging it to drive global economic and social improvements through research, policy recommendations, and interactive dissemination tools.
+
+
+### The World Bank
+
+The **World Bank** is an international financial institution that provides **loans, grants, and technical expertise** to developing countries with the goal of reducing poverty and promoting sustainable economic development. Established in 1944, it is part of the **World Bank Group** and comprises two main entities: the **International Bank for Reconstruction and Development (IBRD)** and the **International Development Association (IDA)**.
+
+#### Activities in Data Collection and Display
+
+##### Data Collection
+
+- The World Bank gathers **extensive global development data** on topics like **poverty**, **education**, **health**, and **economic performance**.
+- Its data informs progress tracking for global initiatives such as the **United Nations' Sustainable Development Goals (SDGs)**.
+
+##### Analysis and Reporting
+
+- The World Bank produces analytical resources such as:
+  - **World Development Report**
+  - **Doing Business Index**
+  - **Poverty and Shared Prosperity Series**
+- These reports provide **critical insights** into development trends and challenges.
+
+##### Open Data Initiatives
+
+- The World Bank's **Open Data platform** makes its development data freely available to the public.
+- The platform offers tools like **dashboards** and **visualizations** for easier exploration and use.
+
+##### Policy and Project Support
+
+- Data is used to design **evidence-based projects and policies** tailored to the unique needs of developing countries.
+- This ensures **impactful and efficient interventions**.
+
+#### Summary
+
+In summary, the **World Bank** leverages its extensive data resources to support global development goals, enabling **informed decision-making** and driving efforts to reduce **poverty** and improve **living standards**.
+
+
+
+
