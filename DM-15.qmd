@@ -180,6 +180,8 @@ GROSPEND <- GROSPEND |> select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS
 
 Creating different tables considering the various indicators. Then, we have created one column per type of measure.
 
+### Splitting GDPMFP
+
 ```{r}
 GDP<-GDPMFP |> filter(Indicateur=="Produit intérieur brut (PIB)") |>
   pivot_wider(
@@ -197,4 +199,22 @@ PRODUCTIVITY <- GDPMFP |>
   values_from = "OBS_VALUE"
 )
 ```
+
+### Splitting EDUSPEND
+
+```{r}
+EDUSPEND |> distinct(Indicateur)
+```
+```{r}
+SUPSPEND <- EDUSPEND |> filter(Indicateur=="Dépenses de l'enseignement supérieur") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+TOTALEDUSPEND <- EDUSPEND|>filter(Indicateur=="Dépenses d'éducation")|>pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+```
+
 
