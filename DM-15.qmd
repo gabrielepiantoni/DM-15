@@ -217,4 +217,40 @@ TOTALEDUSPEND <- EDUSPEND|>filter(Indicateur=="Dépenses d'éducation")|>pivot_w
 )
 ```
 
+### Splitting GROSPEND
+
+```{r}
+GROSPEND |> distinct(Indicateur)
+```
+```{r}
+TRIAD <- GROSPEND |> 
+  filter(Indicateur=="Familles de brevets triadiques") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+STATERSC <- GROSPEND |> 
+  filter(Indicateur=="Chercheurs du secteur de l’État") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+RSC <- GROSPEND |> 
+  filter(Indicateur=="Chercheurs") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+SPENDRD <- GROSPEND |> 
+  filter(Indicateur=="Dépenses intérieures brutes de R-D") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+```
+
 
