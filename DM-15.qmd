@@ -176,11 +176,10 @@ GDPMFP <- GDPMFP |> select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VAL
 GROSPEND <- GROSPEND |> select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VALUE)
 ``` 
 
-## Spliting tables
+## Spliting tables and pivoting
 
-Creating different tables considering the various indicators. Then, we have created one column per type of measure.
 
-### Splitting GDPMFP
+### GDPMFP
 
 ```{r}
 GDP<-GDPMFP |> filter(Indicateur=="Produit intérieur brut (PIB)") |>
@@ -200,7 +199,7 @@ PRODUCTIVITY <- GDPMFP |>
 )
 ```
 
-### Splitting EDUSPEND
+### EDUSPEND
 
 ```{r}
 EDUSPEND |> distinct(Indicateur)
@@ -217,7 +216,7 @@ TOTALEDUSPEND <- EDUSPEND|>filter(Indicateur=="Dépenses d'éducation")|>pivot_w
 )
 ```
 
-### Splitting GROSPEND
+### GROSPEND
 
 ```{r}
 GROSPEND |> distinct(Indicateur)
@@ -253,4 +252,28 @@ SPENDRD <- GROSPEND |>
 
 ```
 
+## Manipulation description
 
+Creating different tables considering the various indicators. Then, we have created one column per type of measure.
+
+First, we decide to create different datasets for each indicator contained in the starting datasets (ie. EDUSPEND, GDPMFP and GROSPEND - Note: for EDUTAIN we thought that the starting dataset can be considered as sufficiently tidy.). 
+
+EDUSPEND contains the following indicators.
+
+```{r}
+EDUSPEND |> distinct(Indicateur)
+```
+
+GDPMFP contains the following indicators.
+
+```{r}
+GDPMFP |> distinct(Indicateur)
+```
+
+GROSPEND contains the following indicators.
+
+```{r}
+GROSPEND |> distinct(Indicateur)
+```
+
+After that, given that the same indicator has more than one type of measure and the values of the different measures were displayed in the same column with another column indicating what type of measure it was, we used pivot-wider to have only one type of variable per column.
