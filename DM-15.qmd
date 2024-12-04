@@ -195,4 +195,11 @@ PRODUCTIVITY <- GDPMFP |>
   values_from = "OBS_VALUE"
 )
 ```
+<<<<<<< HEAD
 p
+=======
+
+
+
+
+>>>>>>> 1828cc72929144e3f2b34ca446abefec3602956e
