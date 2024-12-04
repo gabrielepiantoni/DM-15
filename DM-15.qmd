@@ -4,3 +4,39 @@ author: "Gabriele and Dorian"
 format: html
 ---
 
+# Settings
+## Here i am
+
+```{r}
+here :: i_am("DM-15.Rproj")
+```
+# Packages
+
+```{r}
+library(here)
+library(vroom)
+library(tidyverse)
+```
+
+##Data Import
+```{r}
+EDUSPEND<-vroom(here("PROJET","EDUCATION DATA SETS","Education spending (OECD).csv"))
+EDUTAIN<-vroom(here("PROJET","EDUCATION DATA SETS","Educational attainment, at least completed short-cycle tertiary, population 25+, total (World Bank).csv"))
+GDPMFP<-vroom(here("PROJET","GDP & MFP DATASETS","GDP, MFP and GDP per hour worked (OECD).csv"))
+GROSPEND<-vroom(here("PROJET","R&D DATA SETS","Gross domestic spending in R&D, Researchers per countries & Tridic Patent families (OECD).csv"))
+```
+
+##Github link
+
+https://github.com/gabrielepiantoni/DM-15.git
+
+##Sources' Links
+
+OECD: https://data-explorer.oecd.org
+
+In order to use to get the data from OECD Explore you have to select from the panel on the left the following;
+- Frequency & Time: From 1914 to 2022
+- Country: Select All the Countries
+- Indicator:  Education spending, Gross domestic product (GDP), GDP per hour worked, Multifactor productivity, Researchers, Gross domestic spending on R&D, Triadic patent
+
+World Bank: https://databank.worldbank.org/source/world-development-indicators
