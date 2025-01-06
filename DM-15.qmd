@@ -54,13 +54,16 @@ https://github.com/gabrielepiantoni/DM-15.git
 
 ## World Bank
 
-- [World Bank Indicator for Educational Attainment](https://data.worldbank.org/indicator/SE.TER.CUAT.ST.ZS?end=2023&start=2023&view=bar)
+- [World Bank Indicator for Educational Attainment](https://databank.worldbank.org/home.aspx)
 
-  To download the data, click on **CSV** in the download section at the bottom right corner of the page.
-
-
-
-
+  To access the data from **World Bank Databank**, you will need to select the following options from the panel on the left:
+  - **Database**: World Developments Indicators
+  - **Country**: Select all available countries
+  - **Series**
+    - Educational attainment, at least completed short-cycle tertiary, population 25+, total (%)   
+  - **Time**: From 2005 to 2022
+ 
+To download the data, click on Download options then **CSV**.
 
 # Datasets and Sources
 
