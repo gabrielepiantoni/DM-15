@@ -311,10 +311,4 @@ To pursue our objective, we decided to structure our project as follows.
 
 First, for the sake of completeness, by referring to the data contained in the ‘GDP DataSet’ we will assess the long-standing theorised correlation between TFP and GDP.
 
-Subsequently, using the Education and Research datasets, we will highlight whether and what relationships exist between the evidence in the datasets and TFP’s trends.
-
-
-
-
-
-
+Subsequently, using the Education and Research datasets, we will highlight whether and what relationships exist between the evidence in the datasets and TFP’s trends
