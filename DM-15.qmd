@@ -167,7 +167,19 @@ The **World Bank** is an international financial institution that provides **loa
 
 In summary, the **World Bank** leverages its extensive data resources to support global development goals, enabling **informed decision-making** and driving efforts to reduce **poverty** and improve **living standards**.
 
-# Data manipulation
+# Data formating and normalization
+  This part precedes any further work as, to allow us to show the stylized facts from which we derive our question of interest, we need formatted data that enable us to perform calculations and visualization.
+  We proceed as follow :
+  
+  We clean the data raw data from irrelevant information in contains (as "STRUCTURE_ID", an OECD data classification that doesn't add any information to the data)
+  
+  For the ease of manipulation, we split the data into different tables, each one displaying one indicator and its different measures  
+
+  In order to work with the data and be able to use tydir, we need to reformat the tables obtained from the OECD and World Bank into tables uniformly formatted as follow : 
+  - One variable per column
+  - One row per observation
+  
+  
 
 ## Selecting variables
 
@@ -204,10 +216,6 @@ PRODUCTIVITY <- GDPMFP |>
 ### EDUSPEND
 
 ```{r}
-EDUSPEND |> distinct(Indicateur)
-```
-
-```{r}
 TOTALEDUSPEND <- EDUSPEND|>filter(Indicateur=="Dépenses d'éducation")|>pivot_wider(
   names_from = "Mesure",
   values_from = "OBS_VALUE"
@@ -217,8 +225,16 @@ TOTALEDUSPEND <- EDUSPEND|>filter(Indicateur=="Dépenses d'éducation")|>pivot_w
 ### GROSPEND
 
 ```{r}
-GROSPEND |> distinct(Indicateur)
+
+print("Original column names:")
+print(colnames(EDUTAIN))
+
+colnames(EDUTAIN) <- gsub("\\s\\[YR\\d{4}\\]", "", colnames(EDUTAIN))
+#ChatGPT generated
+
 ```
+
+
 ```{r}
 TRIAD <- GROSPEND |> 
   filter(Indicateur=="Familles de brevets triadiques") |>
@@ -248,33 +264,14 @@ SPENDRD <- GROSPEND |>
   values_from = "OBS_VALUE"
 )
 
+EDUTAIN <- EDUTAIN |>
+  pivot_longer(cols = -`Country Name`,
+               names_to = "Year",
+               values_to = "Value" 
+               )
+
 ```
 
-## Manipulation description
-
-Creating different tables considering the various indicators. Then, we have created one column per type of measure.
-
-First, we decide to create different datasets for each indicator contained in the starting datasets (ie. EDUSPEND, GDPMFP and GROSPEND - Note: for EDUTAIN we thought that the starting dataset can be considered as sufficiently tidy.). 
-
-EDUSPEND contains the following indicators.
-
-```{r}
-EDUSPEND |> distinct(Indicateur)
-```
-
-GDPMFP contains the following indicators.
-
-```{r}
-GDPMFP |> distinct(Indicateur)
-```
-
-GROSPEND contains the following indicators.
-
-```{r}
-GROSPEND |> distinct(Indicateur)
-```
-
-After that, given that the same indicator has more than one type of measure and the values of the different measures were displayed in the same column with another column indicating what type of measure it was, we used pivot-wider to have only one type of variable per column.
 
 # Data description 
 ## Synthesis
@@ -288,7 +285,8 @@ datasets <- list(
   SPENDRD = SPENDRD,
   STATERSC = STATERSC,
   TOTALEDUSPEND = TOTALEDUSPEND,
-  TRIAD = TRIAD
+  TRIAD = TRIAD,
+  EDUTAIN = EDUTAIN
 )
 
 summary_table <- data.frame(
