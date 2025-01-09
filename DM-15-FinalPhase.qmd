@@ -252,6 +252,35 @@ for (var in yes_no_variables) {
 }
 ```
 
+```{r}
+#Graphs: Real GDP - OECD, ASIANTIGERS and DEVCOUNTRIES
+GDP |>
+  pivot_longer(cols = c("vOCDE", 
+                   "vAsianTigers", 
+                   "vIndevelopment"),
+               names_to = "Region",
+               values_to="avgGDP"
+               ) |>
+  filter(!is.na(avgGDP)) |>
+  ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
+  geom_line()
+```
+
+```{r}
+#Graphs: Real GDP - EUROPE
+GDP |>
+  pivot_longer(cols = c("vEurope", 
+                      "vCentralEurope", 
+                      "vSouthernEurope", 
+                      "vEasternEurope", 
+                      "vNorthernEurope"),
+               names_to = "Region",
+               values_to="avgGDP"
+               ) |>
+  filter(!is.na(avgGDP)) |>
+  ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
+  geom_line()
+```
 
 
 
