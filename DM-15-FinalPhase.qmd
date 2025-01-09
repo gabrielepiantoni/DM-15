@@ -2,6 +2,5 @@
 title: "DM-15-FinalPhase"
 author: "Dorian Nadal", 
         "Gabriele Piantoni"
-format: html
+format: pdf
 ---
-
