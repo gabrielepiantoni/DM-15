@@ -266,7 +266,7 @@ graph1 <-GDP |>
                values_to="avgGDP"
                ) |>
   filter(!is.na(avgGDP)) |>
-  filter(TIME_PERIOD >=1990) |>
+  filter(TIME_PERIOD >=1995) |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
   geom_line()
 ```
@@ -312,7 +312,7 @@ arrange(TIME_PERIOD)|> mutate(growth_rateY = ((RealGDP- lag(RealGDP)) / lag(Real
 #Graphs: Growth_rate GDP - Germany, France, US and South Corea
 graph3 <-GDP |>
   filter(Pays=="France"|Pays== "États-Unis"|Pays== "Allemagne"|Pays== "Corée") |>
-  ggplot(aes(x=TIME_PERIOD, y=growth_rateY,, color=Pays)) +
+  ggplot(aes(x=TIME_PERIOD, y=growth_rateY, color=Pays)) +
   geom_smooth(method="lm", se=FALSE)
 
 ```
