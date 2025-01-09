@@ -51,7 +51,11 @@ https://github.com/gabrielepiantoni/DM-15.git
     - Researchers
     - Gross Domestic Spending on R&D
     - Triadic Patent
-
+    - Inflation (CPI)
+    - Investment (GFCF)
+    - Hours Worked
+    - Labour Force
+    
 ## World Bank
 
 - [World Bank Indicator for Educational Attainment](https://databank.worldbank.org/home.aspx)
