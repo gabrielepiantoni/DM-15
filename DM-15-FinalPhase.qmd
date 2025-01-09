@@ -32,6 +32,88 @@ CPI <-vroom(here("PROJET","CPI.csv"))
 L<-vroom(here("PROJET","L.csv"))
 K<-vroom(here("PROJET","K.csv"))
 ```
+```{r}
+# Data cleaning, formating : clean the raw data from irrelevant information in contains
+EDUSPEND <- EDUSPEND|>select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VALUE)
+EDUTAIN <- EDUTAIN|>select(-c(`Country Code`, `Series Name`, `Series Code`))
+GDPMFP <- GDPMFP |> select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VALUE)
+GROSPEND <- GROSPEND |> select(Pays, Indicateur, Sujet, Mesure, TIME_PERIOD, OBS_VALUE)
+```
+
+```{r}
+# Data cleaning, formating : split the data into different tables, each one displaying one indicator and its different measures
+GDP<-GDPMFP |> filter(Indicateur=="Produit intérieur brut (PIB)") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+MFP <- GDPMFP|>filter(Indicateur=="Productivité multifactorielle")|>pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+PRODUCTIVITY <- GDPMFP |> 
+  filter(Indicateur=="PIB par heure travaillée")|>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+```
+
+```{r}
+# Data cleaning, formating : same as previous chunk
+TRIAD <- GROSPEND |> 
+  filter(Indicateur=="Familles de brevets triadiques") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+STATERSC <- GROSPEND |> 
+  filter(Indicateur=="Chercheurs du secteur de l’État") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+RSC <- GROSPEND |> 
+  filter(Indicateur=="Chercheurs") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+SPENDRD <- GROSPEND |> 
+  filter(Indicateur=="Dépenses intérieures brutes de R-D") |>
+  pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+
+EDUTAIN <- EDUTAIN |>
+  pivot_longer(cols = -`Country Name`,
+               names_to = "Year",
+               values_to = "Value" 
+               )
+```
+
+
+```{r}
+# Data cleaning, formating : setting TOTALEDUSPEND i the right format
+TOTALEDUSPEND <- EDUSPEND|>filter(Indicateur=="Dépenses d'éducation")|>pivot_wider(
+  names_from = "Mesure",
+  values_from = "OBS_VALUE"
+)
+```
+
+```{r}
+# Data cleaning, formating : removing the code of each TIME_PERIOD to allow for datamanipulation
+colnames(EDUTAIN) <- gsub("\\s\\[YR\\d{4}\\]", "", colnames(EDUTAIN))
+#ChatGPT generated
+```
+
+
+
+
 
 
 # Introduction
