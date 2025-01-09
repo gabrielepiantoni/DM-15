@@ -253,8 +253,9 @@ for (var in yes_no_variables) {
 
 
 ```{r}
+#| output: false
 #Graphs: Real GDP per capita - Euro Area and GB, ASIANTIGERS, China, united states
-GDP |>
+graph1 <-GDP |>
   pivot_longer(cols = c("cEtatsUnis", 
                    "cAsianTigers", 
                    "cChina",
@@ -269,8 +270,9 @@ GDP |>
 ```
 
 ```{r}
+#| output: false
 #Graphs: Real GDP - EUROPE
-GDP |>
+graph2<-GDP |>
   pivot_longer(cols = c("cEurope", 
                       "cCentralEurope", 
                       "cSouthernEurope", 
@@ -284,6 +286,15 @@ GDP |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
   geom_line()
 ```
+
+```{r}
+#| fig.width: 12
+#| fig.height: 4
+library(patchwork)
+graph1 + graph2 +
+  plot_layout(widths = c(10, 10))
+```
+
 #TFP and GDP growth
 
 Putting face to face TFP and GDP growt-->exist a correlation between the two
@@ -296,21 +307,32 @@ arrange(TIME_PERIOD)|> mutate(growth_rateY = ((RealGDP- lag(RealGDP)) / lag(Real
 ```
 
 ```{r}
+#| output: false
 #Graphs: Growth_rate GDP - Germany, France, US and South Corea
-GDP |>
+graph3 <-GDP |>
   filter(Pays=="France"|Pays== "États-Unis"|Pays== "Allemagne"|Pays== "Corée") |>
   ggplot(aes(x=TIME_PERIOD, y=growth_rateY,, color=Pays)) +
   geom_smooth(method="lm", se=FALSE)
+
 ```
 
 ```{r}
+#| output: false
 ##Graphs: TFP growth - Germany, France, US and South Corea
-MFP|>
+graph4<-MFP|>
    filter(Pays=="France"|Pays== "Chine (République populaire de)"|Pays== "États-Unis"|Pays== "Allemagne"|Pays== "Corée") |>
   ggplot(aes(x=TIME_PERIOD, y=`Taux de croissance annuel (%)`, color=Pays)) +
   geom_smooth(method="lm", se=FALSE)
 ```
-#Growth decomposition and regression of TFP and GDP
+
+```{r}
+#| fig.width: 12
+#| fig.height: 4
+graph3+graph4
+```
+
+# Growth decomposition and regression of TFP and GDP
+
 ```{r}
 #formatting L
 L<-L |>
@@ -400,6 +422,7 @@ summary(lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA, data=na
 
 
 ```{r}
+# France
 # Solow-Swan model
 Solow <- Dec |>
   filter(Pays == "France") |>
@@ -422,6 +445,8 @@ Solow <- Dec |>
 ```
 
 ```{r}
+#| output: false
+# France 
 Solow1 <- Solow |>
   pivot_longer(
     cols = c(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others),
@@ -430,10 +455,10 @@ Solow1 <- Solow |>
   )
 
 # Bar chart decomposition
-ggplot(Solow1, aes(x = "", y = Value, fill = Component)) +
+graph5 <- ggplot(Solow1, aes(x = "", y = Value, fill = Component)) +
   geom_bar(stat = "identity") +
   labs(
-    title = "Contributions to Total Growth Rate (France, 1990-2015)",
+    title = "Growth rate decomposition (France, Germany,USA, 1990-2015)",
     x = NULL,
     y = "Growth Rate Contribution",
     fill = "Component"
@@ -443,12 +468,102 @@ ggplot(Solow1, aes(x = "", y = Value, fill = Component)) +
 ```
 
 
+```{r}
+# Germany
+# Solow-Swan model
+Solow2 <- Dec |>
+  filter(Pays == "Allemagne") |>
+  arrange(TIME_PERIOD) |>
+  mutate(
+    growth_rateY = (100 + growth_rateY) / 100,
+    growth_rateK = (100 + growth_rateK) / 100,
+    growth_rateL = (100 + growth_rateL) / 100,
+    growth_rateA = (100 + growth_rateA) / 100
+  ) |>
+  filter(TIME_PERIOD >= 1990 & TIME_PERIOD <= 2015) |>
+  mutate(
+    growth_rate_totalL = 0.66*prod(growth_rateL),
+    growth_rate_totalY = prod(growth_rateY),
+    growth_rate_totalK = 0.33*prod(growth_rateK),
+    growth_rate_totalA = 0.66*prod(growth_rateA)
+  ) |>
+  mutate(others = growth_rate_totalY - growth_rate_totalK - growth_rate_totalL - growth_rate_totalA)|>
+  select(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others, growth_rate_totalY)
+```
 
+```{r}
+#| output: false
+# Germany 
+Solow3 <- Solow2 |>
+  pivot_longer(
+    cols = c(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others),
+    names_to = "Component",
+    values_to = "Value"
+  )
 
-  
+# Bar chart decomposition
+graph6<-ggplot(Solow3, aes(x = "", y = Value, fill = Component)) +
+  geom_bar(stat = "identity") +
+  labs(
+    x = NULL,
+    y = "Growth Rate Contribution",
+    fill = "Component"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+```
 
+```{r}
+# USA
+# Solow-Swan model
+Solow4 <- Dec |>
+  filter(Pays == "États-Unis") |>
+  arrange(TIME_PERIOD) |>
+  mutate(
+    growth_rateY = (100 + growth_rateY) / 100,
+    growth_rateK = (100 + growth_rateK) / 100,
+    growth_rateL = (100 + growth_rateL) / 100,
+    growth_rateA = (100 + growth_rateA) / 100
+  ) |>
+  filter(TIME_PERIOD >= 1990 & TIME_PERIOD <= 2015) |>
+  mutate(
+    growth_rate_totalL = 0.66*prod(growth_rateL),
+    growth_rate_totalY = prod(growth_rateY),
+    growth_rate_totalK = 0.33*prod(growth_rateK),
+    growth_rate_totalA = 0.66*prod(growth_rateA)
+  ) |>
+  mutate(others = growth_rate_totalY - growth_rate_totalK - growth_rate_totalL - growth_rate_totalA)|>
+  select(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others, growth_rate_totalY)
+```
 
+```{r}
+#| output: false
+# USA 
+Solow5 <- Solow4 |>
+  pivot_longer(
+    cols = c(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others),
+    names_to = "Component",
+    values_to = "Value"
+  )
 
+# Bar chart decomposition
+graph7 <-ggplot(Solow5, aes(x = "", y = Value, fill = Component)) +
+  geom_bar(stat = "identity") +
+  labs(
+    x = NULL,
+    y = "Growth Rate Contribution",
+    fill = "Component"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+```
+
+```{r}
+#| fig.width: 12
+#| fig.height: 4
+graph5+graph6+graph7
+```
+$Y = K^\alpha (AL)^{1-\alpha}$
 # Data sets descriptions
 
 # Data analysis
