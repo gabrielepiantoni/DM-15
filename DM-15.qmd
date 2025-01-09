@@ -99,6 +99,20 @@ To download the data, click on Download options then **CSV**.
 - **Triadic Patent families** (source: OECD Data Explorer; 1981-2022):
   Triadic patent families are a set of patents filed at three of these major patent offices: the European Patent Office (EPO), the Japan Patent Office (JPO), and the United States Patent and Trademark Office (USPTO). Triadic patent family counts are attributed to the country of residence of the inventor and to the date when the patent was first registered.
   
+### Extra Datasets
+
+- **Inflation (CPI)** (source: OECD Data Explorer; 1950-2020):
+  CPI (Consumer Price Index) taking 2015 as the base year
+
+- **Investment (GFCF)** (source: OECD Data Explorer; 1951-2020):
+  Gross fixed capital formation (GFCF) in annual gross rate (%). Gross fixed capital formation (GFCF), also called "investment", is defined as the acquisition of produced assets (including purchases of second-hand assets), including the production of such assets by producers for their own use, minus disposals. 
+
+- **Hours Worked** (source: OECD Data Explorer; 1950-2020):
+Hours worked is the total number of hours actually worked per year divided by the average number of people in employment per year.
+
+- **Labour Force** (source: OECD Data Explorer; 1955-2020)
+The labour force, or currently active population, comprises all persons who fulfil the requirements for inclusion among the employed (civilian employment plus the armed forces) or the unemployed.
+  
 ## Sources 
 
 ### The Organisation for Economic Co-operation and Development (OECD)
