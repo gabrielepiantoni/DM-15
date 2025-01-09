@@ -320,6 +320,81 @@ L<-L |>
               values_from = OBS_VALUE)
 ```
 
+```{r}
+#Computing total hours worked
+L<-L |>
+  mutate(L = `Population active`*`Heures travaillées`)
+```
+
+```{r}
+# Computing the growth rate of L
+L<-L |>
+  group_by(Pays) |>
+arrange(TIME_PERIOD)|> mutate(growth_rateL = ((L- lag(L)) / lag(L)) * 100) |>
+  arrange(Pays,TIME_PERIOD)
+```
+
+```{r}
+# Cleaning K
+K<-K |> 
+  select(Pays, TIME_PERIOD, Mesure, OBS_VALUE) |>
+  filter(Mesure=="Taux de croissance annuel (%)") |>
+  pivot_wider(names_from=Mesure, 
+              values_from=OBS_VALUE) |>
+  arrange(Pays, TIME_PERIOD) |>
+  rename(growth_rateK= `Taux de croissance annuel (%)` )
+```
+
+Creating a data set for the growth decomposition
+```{r}
+# Creating the dataset for growth decomposition
+Dec <- GDP |>
+  select(Pays, TIME_PERIOD, growth_rateY)
+```
+
+```{r}
+# Creating the dataset for growth decomposition
+Dec<-Dec |>
+  full_join(K, Dec, by=c("TIME_PERIOD", "Pays"))
+```
+
+```{r}
+# Creating the dataset for growth decomposition
+Dec <- Dec |>
+  full_join(L, Dec, by=c("TIME_PERIOD", "Pays")) |>
+  select(, Pays, TIME_PERIOD, growth_rateY, growth_rateK, growth_rateL)
+```
+
+```{r}
+# Creating the dataset for growth decomposition
+MFP <- MFP |>
+  rename(growth_rateA=`Taux de croissance annuel (%)`)
+```
+
+```{r}
+# Creating the dataset for growth decomposition
+Dec <-Dec |>
+  full_join(MFP, Dec, by=c("TIME_PERIOD", "Pays")) |>
+  select(Pays, TIME_PERIOD, growth_rateY, growth_rateK, growth_rateL, growth_rateA)
+```
+
+```{r}
+# Creating the dataset for growth decomposition : checking the accuracy
+Dec |>
+  mutate(check=growth_rateY-(0.33*growth_rateK+0.66*(growth_rateL+ growth_rateA))) |>
+  filter(Pays=="France" | Pays=="Allemagne"| Pays=="Corée")
+```
+```{r}
+#linear model : regression of L, K, A on Y
+summary(lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA, data=na.exclude(Dec)))
+```
+
+
+
+
+
+
+
 
   
 
