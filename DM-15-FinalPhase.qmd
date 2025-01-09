@@ -6,6 +6,30 @@ author:
 format: pdf
 ---
 
+```{r}
+#Setting: Here i am
+#| message: false
+here :: i_am("DM-15.Rproj")
+```
+
+```{r}
+#Setting: Packages
+#| message: false
+library(here)
+library(vroom)
+library(tidyverse)
+library(knitr)
+```
+
+```{r}
+#Setting: Data Import
+#| message: false
+EDUSPEND<-vroom(here("PROJET","EDUCATION DATA SETS","Education spending (OECD).csv"))
+EDUTAIN<-vroom(here("PROJET","EDUCATION DATA SETS","Educational attainment, at least completed short-cycle tertiary, population 25+, total (World Bank).csv"))
+GDPMFP<-vroom(here("PROJET","GDP & MFP DATASETS","GDP, MFP and GDP per hour worked (OECD).csv"))
+GROSPEND<-vroom(here("PROJET","R&D DATA SETS","Gross domestic spending in R&D, Researchers per countries & Tridic Patent families (OECD).csv"))
+```
+
 
 # Introduction
 
