@@ -28,6 +28,9 @@ EDUSPEND<-vroom(here("PROJET","EDUCATION DATA SETS","Education spending (OECD).c
 EDUTAIN<-vroom(here("PROJET","EDUCATION DATA SETS","Educational attainment, at least completed short-cycle tertiary, population 25+, total (World Bank).csv"))
 GDPMFP<-vroom(here("PROJET","GDP & MFP DATASETS","GDP, MFP and GDP per hour worked (OECD).csv"))
 GROSPEND<-vroom(here("PROJET","R&D DATA SETS","Gross domestic spending in R&D, Researchers per countries & Tridic Patent families (OECD).csv"))
+CPI <-vroom(here("PROJET","CPI.csv"))
+L<-vroom(here("PROJET","L.csv"))
+K<-vroom(here("PROJET","K.csv"))
 ```
 
 
