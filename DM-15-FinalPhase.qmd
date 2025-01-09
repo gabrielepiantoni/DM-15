@@ -284,8 +284,32 @@ GDP |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
   geom_line()
 ```
+#TFP and GDP growth
 
+Putting face to face TFP and GDP growt-->exist a correlation between the two
+```{r}
+#Computing the growth rate of GDP
+GDP <- GDP |>
+  group_by(Pays) |>
+arrange(TIME_PERIOD)|> mutate(growth_rateY = ((RealGDP- lag(RealGDP)) / lag(RealGDP)) * 100) |>
+  arrange(Pays,TIME_PERIOD)
+```
 
+```{r}
+#Graphs: Growth_rate GDP - Germany, France, US and South Corea
+GDP |>
+  filter(Pays=="France"|Pays== "États-Unis"|Pays== "Allemagne"|Pays== "Corée") |>
+  ggplot(aes(x=TIME_PERIOD, y=growth_rateY,, color=Pays)) +
+  geom_smooth(method="lm", se=FALSE)
+```
+
+```{r}
+##Graphs: TFP growth - Germany, France, US and South Corea
+MFP|>
+   filter(Pays=="France"|Pays== "Chine (République populaire de)"|Pays== "États-Unis"|Pays== "Allemagne"|Pays== "Corée") |>
+  ggplot(aes(x=TIME_PERIOD, y=`Taux de croissance annuel (%)`, color=Pays)) +
+  geom_smooth(method="lm", se=FALSE)
+```
 
 
 
