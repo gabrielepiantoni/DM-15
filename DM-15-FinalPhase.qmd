@@ -166,7 +166,7 @@ GDP <- GDP |>
   filter(TIME_PERIOD<="2020")
 ```
 
-We create categories of countries to simplify the presentation and compute average growth rates
+We create categories of countries to simplify the presentation and compute average growth rates (justification to do !!)
 
 ```{r}
 #creating categroies of countries
