@@ -4,3 +4,14 @@ author: "Dorian Nadal",
         "Gabriele Piantoni"
 format: pdf
 ---
+# Introduction
+
+# Research question presentation 
+
+## Stylized facts
+
+# Data sets descriptions
+
+# Data analysis
+
+# Conclusion
