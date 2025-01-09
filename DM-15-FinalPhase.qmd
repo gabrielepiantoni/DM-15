@@ -1,9 +1,14 @@
 ---
 title: "DM-15-FinalPhase"
 author: 
-- "Dorian Nadal", 
+- "Dorian Nadal"
 - "Gabriele Piantoni"
-format: pdf
+output: 
+  pdf: default
+execute:
+  echo: false      # Hide code
+  warning: false   # Hide warnings
+  message: false   # Hide messages
 ---
 
 ```{r}
@@ -170,36 +175,24 @@ We create categories of countries to simplify the presentation and compute avera
 
 ```{r}
 #creating categroies of countries
+#excluding Israël because of aberrant values
+#excluding Russia because of aberrant values
+#excluding Colombia because of aberrant values
+
 GDP <- GDP |>
-  mutate(OCDE = ifelse(Pays %in% c("Royaume-Uni", "France", "Canada", "Australie", 
-                    "États-Unis", "Norvège", "Danemark", "Nouvelle-Zélande", 
-                    "Chine (République populaire de)", "Corée", "Suisse", 
-                    "Finlande", "Singapour", "Suède", "Allemagne", 
-                    "Tchéquie", "Autriche", "Pologne", "Irlande", 
-                    "Portugal", "Pays-Bas", "Hongrie", "Grèce", "Israël", 
-                    "Luxembourg", "Belgique", "Japon", "Espagne", "Chili"), "YES", "NO"))
+  mutate(`Euro Area and GB` = ifelse(Pays %in% c("France", "Ex-République fédérale d'Allemagne", "Finlande", "Lettonie", 
+  "Slovénie", "Irlande", "Autriche", "Malte", "Italie", "Chypre", "Croatie", 
+  "Portugal", "Pays-Bas", "Grèce", "République slovaque", "Luxembourg", 
+  "Belgique", "Lituanie", "Estonie", "Espagne","Royaume-Uni" ), "YES", "NO"))
          
 GDP <- GDP |>
   mutate(AsianTigers = ifelse(Pays %in% c("Corée", "Singapour"), "YES", "NO"))
+
+GDP <- GDP |>
+  mutate(EtatsUnis = ifelse(Pays %in% c("États-Unis"), "YES", "NO"))
          
 GDP <- GDP |>
   mutate(Europe = ifelse(Pays %in% c("Royaume-Uni", "France", "Allemagne", "Norvège", "Danemark", "Nouvelle-Zélande", "Suisse", "Finlande", "Suède", "Pays-Bas", "Autriche", "Irlande", "Tchéquie", "Slovénie", "Pologne","Lettonie", "Lituanie", "Estonie", "Bulgarie", "Roumanie", "Croatie", "Portugal", "Italie", "Grèce", "Espagne", "Belgique", "Luxembourg", "Serbie", "Albanie", "Macédoine du Nord"), "YES", "NO"))
-         
-GDP <- GDP |>
-  mutate(Asia = ifelse(Pays %in% c("Chine (République populaire de)", "Arabie saoudite", 
-          "Corée", "Singapour", "Japon", "Indonésie", "Israël"), "YES", "NO"))
-         
-GDP <- GDP |>
-  mutate(NorthAmerica = ifelse(Pays %in% c("Canada", "États-Unis", "Mexique"), "YES", "NO"))
-         
-GDP <- GDP |>
-  mutate(SouthAmerica = ifelse(Pays %in% c("Argentine", "Brésil", "Chili", "Colombie"), "YES", "NO"))
-         
-GDP <- GDP |>
-  mutate(Africa = ifelse(Pays %in% c("Afrique du Sud", "Cameroun", "Sénégal", "Maroc", "Madagascar", "Zambie"), "YES", "NO"))
-         
-GDP <- GDP |>
-  mutate(Oceania = ifelse(Pays %in% c("Australie", "Nouvelle-Zélande"), "YES", "NO"))
          
 GDP <- GDP |>
   mutate(CentralEurope = ifelse(Pays %in% c("Allemagne", "Autriche", "Pologne", "Tchéquie", 
@@ -210,37 +203,30 @@ GDP <- GDP |>
                      "Croatie", "Malte"), "YES", "NO"))
          
 GDP <- GDP |>
-  mutate(EasternEurope = ifelse(Pays %in% c("Roumanie", "Bulgarie", "Lettonie", "Lituanie", 
-                    "Estonie", "Serbie", "Macédoine du Nord", "Albanie", 
-                    "Russie", "Géorgie"), "YES", "NO"))
+  mutate(EasternEurope = ifelse(Pays %in% c("Lettonie", "Lituanie", "Estonie"), "YES", "NO"))
          
 GDP <- GDP |>
   mutate(NorthernEurope = ifelse(Pays %in% c("Royaume-Uni", "Norvège", "Danemark", 
                      "Suède", "Finlande", "Pays-Bas", "Irlande"), "YES", "NO"))
          
 GDP <- GDP |>
-  mutate(Indevelopment = ifelse(Pays %in% c("Chine (République populaire de)", "Indonésie", 
-                          "Inde", "Afrique du Sud", "Cameroun", 
-                          "Zambie", "Maroc", "Madagascar", "Russie", 
-                          "Senegal", "Colombie", "Argentine", "Arabie saoudite"), "YES", "NO"))
+  mutate(China = ifelse(Pays %in% c("Chine (République populaire de)"), "YES", "NO"))
 ```
 
 ```{r}
 #creating binary variables to indicate if a country belongs to a category
 # List of YES/NO variables
-yes_no_variables <- c("OCDE", 
+# computing average GDP (variables starting with v)
+yes_no_variables <- c( 
                       "AsianTigers", 
-                      "Europe", 
-                      "Asia", 
-                      "NorthAmerica", 
-                      "SouthAmerica", 
-                      "Africa", 
-                      "Oceania", 
+                      "Europe",
                       "CentralEurope", 
                       "SouthernEurope", 
                       "EasternEurope", 
                       "NorthernEurope", 
-                      "Indevelopment")
+                      "EtatsUnis",
+                      "China",
+                      "Euro Area and GB")
 
 for (var in yes_no_variables) {
   GDP <- GDP |>
@@ -253,15 +239,31 @@ for (var in yes_no_variables) {
 ```
 
 ```{r}
+# computing average GDP per capita
+# variables starting with c
+for (var in yes_no_variables) {
+  GDP <- GDP |>
+    group_by(TIME_PERIOD) |>
+    mutate(!!paste0("c", var) := ifelse(!!sym(var) == "YES", 
+                                        mean(RealGDPperCapita [!!sym(var) == "YES"], na.rm = TRUE), 
+                                        NA)) |>
+    ungroup()
+}
+```
+
+
+```{r}
 #Graphs: Real GDP - OECD, ASIANTIGERS and DEVCOUNTRIES
 GDP |>
-  pivot_longer(cols = c("vOCDE", 
-                   "vAsianTigers", 
-                   "vIndevelopment"),
+  pivot_longer(cols = c("cEtatsUnis", 
+                   "cAsianTigers", 
+                   "cChina",
+                   "cEuro Area and GB"),
                names_to = "Region",
                values_to="avgGDP"
                ) |>
   filter(!is.na(avgGDP)) |>
+  filter(TIME_PERIOD >=1990) |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
   geom_line()
 ```
@@ -278,12 +280,19 @@ GDP |>
                values_to="avgGDP"
                ) |>
   filter(!is.na(avgGDP)) |>
+  filter (TIME_PERIOD>=1995) |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
   geom_line()
 ```
 
 
-
+```{r}
+GDP |>
+  filter(EasternEurope=="YES") |>
+  filter(TIME_PERIOD>=1995)|>
+  ggplot(aes(x=TIME_PERIOD, y=RealGDPperCapita, color=Pays)) +
+  geom_line()
+```
 
 
 
