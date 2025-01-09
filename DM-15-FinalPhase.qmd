@@ -6,9 +6,9 @@ author:
 output: 
   pdf: default
 execute:
-  echo: false      # Hide code
-  warning: false   # Hide warnings
-  message: false   # Hide messages
+  echo: false      
+  warning: false  
+  message: false   
 ---
 
 ```{r}
@@ -379,6 +379,7 @@ Dec <-Dec |>
 ```
 
 ```{r}
+#| output: false
 # Creating the dataset for growth decomposition : checking the accuracy
 Dec |>
   mutate(check=growth_rateY-(0.33*growth_rateK+0.66*(growth_rateL+ growth_rateA))) |>
@@ -421,7 +422,6 @@ Solow <- Dec |>
 ```
 
 ```{r}
-# 
 Solow1 <- Solow |>
   pivot_longer(
     cols = c(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others),
