@@ -1,14 +1,28 @@
 ---
 title: "DM-15-FinalPhase"
-author: "Dorian Nadal", 
-        "Gabriele Piantoni"
+author: 
+- "Dorian Nadal", 
+- "Gabriele Piantoni"
 format: pdf
 ---
+
+
 # Introduction
+
+  This paper investigate the relationship between research, education and TFP growth. 
+  We start by showing that TFP is worth of interest as it is one of the major drivers of economic growth. That demonstrated, we concentrate on our main goal, determining whether or not research and education trigger TFP growth.
 
 # Research question presentation 
 
+  We here point out that countries have experienced growth over the last decades then we use the augmented version of the neoclassical growth model of Solow and Swan (1956) to show that TFP is one of the major drivers of growth, hence justifying the interest of our question.
+
 ## Stylized facts
+
+
+
+  
+
+
 
 # Data sets descriptions
 
