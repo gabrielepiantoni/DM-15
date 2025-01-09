@@ -310,7 +310,15 @@ MFP|>
   ggplot(aes(x=TIME_PERIOD, y=`Taux de croissance annuel (%)`, color=Pays)) +
   geom_smooth(method="lm", se=FALSE)
 ```
-
+#Growth decomposition and regression of TFP and GDP
+```{r}
+#formatting L
+L<-L |>
+  select(TIME_PERIOD,Pays,Indicateur, OBS_VALUE )
+L<-L |>
+  pivot_wider(names_from = Indicateur,
+              values_from = OBS_VALUE)
+```
 
 
   
