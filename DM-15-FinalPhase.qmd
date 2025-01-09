@@ -390,8 +390,49 @@ summary(lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA, data=na
 ```
 
 
+```{r}
+# Solow-Swan model
+Solow <- Dec |>
+  filter(Pays == "France") |>
+  arrange(TIME_PERIOD) |>
+  mutate(
+    growth_rateY = (100 + growth_rateY) / 100,
+    growth_rateK = (100 + growth_rateK) / 100,
+    growth_rateL = (100 + growth_rateL) / 100,
+    growth_rateA = (100 + growth_rateA) / 100
+  ) |>
+  filter(TIME_PERIOD >= 1990 & TIME_PERIOD <= 2015) |>
+  mutate(
+    growth_rate_totalL = 0.66*prod(growth_rateL),
+    growth_rate_totalY = prod(growth_rateY),
+    growth_rate_totalK = 0.33*prod(growth_rateK),
+    growth_rate_totalA = 0.66*prod(growth_rateA)
+  ) |>
+  mutate(others = growth_rate_totalY - growth_rate_totalK - growth_rate_totalL - growth_rate_totalA)|>
+  select(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others, growth_rate_totalY)
+```
 
+```{r}
+# 
+Solow1 <- Solow |>
+  pivot_longer(
+    cols = c(growth_rate_totalL, growth_rate_totalA, growth_rate_totalK, others),
+    names_to = "Component",
+    values_to = "Value"
+  )
 
+# Bar chart decomposition
+ggplot(Solow1, aes(x = "", y = Value, fill = Component)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Contributions to Total Growth Rate (France, 1990-2015)",
+    x = NULL,
+    y = "Growth Rate Contribution",
+    fill = "Component"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+```
 
 
 
