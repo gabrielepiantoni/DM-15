@@ -253,7 +253,7 @@ for (var in yes_no_variables) {
 
 
 ```{r}
-#Graphs: Real GDP - OECD, ASIANTIGERS and DEVCOUNTRIES
+#Graphs: Real GDP per capita - Euro Area and GB, ASIANTIGERS, China, united states
 GDP |>
   pivot_longer(cols = c("cEtatsUnis", 
                    "cAsianTigers", 
@@ -271,11 +271,11 @@ GDP |>
 ```{r}
 #Graphs: Real GDP - EUROPE
 GDP |>
-  pivot_longer(cols = c("vEurope", 
-                      "vCentralEurope", 
-                      "vSouthernEurope", 
-                      "vEasternEurope", 
-                      "vNorthernEurope"),
+  pivot_longer(cols = c("cEurope", 
+                      "cCentralEurope", 
+                      "cSouthernEurope", 
+                      "cEasternEurope", 
+                      "cNorthernEurope"),
                names_to = "Region",
                values_to="avgGDP"
                ) |>
@@ -285,14 +285,6 @@ GDP |>
   geom_line()
 ```
 
-
-```{r}
-GDP |>
-  filter(EasternEurope=="YES") |>
-  filter(TIME_PERIOD>=1995)|>
-  ggplot(aes(x=TIME_PERIOD, y=RealGDPperCapita, color=Pays)) +
-  geom_line()
-```
 
 
 
