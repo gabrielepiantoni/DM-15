@@ -298,20 +298,14 @@ Figure 3 and 4 displaies respectively the evpolution of the GDP growth rate and 
 
 We know *space* a theoretical framework, affected by empirical evidence, that established a causal relationship between TFP growth and GDP growth.
 
-<<<<<<< HEAD
+
 Figure 5 shows that the data fits very well with the model prediction: the contribution of factors that are not considered is very small compared to the other parts.
 We decomposed growth according to the model growth decomposition equation, using $\alpha$=1/3, as it is the commonly used value for this parameter and this value tends to remain the same over time (Kaldor fact: the share of capital in production tend to be constant)
 Table 1 and 2 support pur proposition. When we compute a regression to explain g_Y with g_L, g_K and g_A as explaneatpry variable, we find a very high *space* for all parameters and consideratively high coefficent for g_A.
 Even when controlling for countries in table 2, we found similar coefficients still with very high significance levels.
 We notice that coefficient for the binary variable *space* for countries are globally not significant, that is, differences across coutries do not add much information about the relation between TFP growth and GDP growth.
 Considering these evidence and the theoretical framework provided, we can believe, with confidence, in the existence of a strong causal relationship between TFP growth and GDP growth.
----
-title: "Solow-Swan Model (1956)"
-format: html
----
-=======
 
->>>>>>> 57ecf31a599b1c3a180f0e5aecc13c3c832006b1
 
 # Solow-Swan Model (1956)
 
