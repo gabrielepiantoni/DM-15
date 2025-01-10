@@ -485,13 +485,43 @@ summary(lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA, data=na
       col.names = c("Term", "Estimate", "Std. Error", "t value", "p value"))
 ```
 ```{r}
+lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA, data=na.exclude(Dec))|>
+summary() |>
+  (\(x) data.frame(
+    Statistic = c("N", "R2", "Adjusted R2"),
+    Value = c(x$df[1] + x$df[2], x$r.squared, x$adj.r.squared)
+  ))() |>
+  kable(
+    caption = "Model Summary Statistics",
+    col.names = c("Statistic", "Value")
+  )
+
+```
+
+
+```{r}
 #linear model : regression of L, K, A on Y
+
 summary(lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA+Pays, data=na.exclude(Dec))) |>
   tidy()|>
   mutate(p.value=as.character(p.value))|>
   kable( 
       caption = "Summary of Linear Model Coefficients", 
       col.names = c("Term", "Estimate", "Std. Error", "t value", "p value"))
+```
+
+```{r}
+lm(formula = growth_rateY ~ growth_rateK + growth_rateL + growth_rateA + Pays, data = na.exclude(Dec)) |>
+summary() |>
+  (\(x) data.frame(
+    Statistic = c("N", "R2", "Adjusted R2"),
+    Value = c(x$df[1] + x$df[2], x$r.squared, x$adj.r.squared)
+  ))() |>
+  kable(
+    caption = "Model Summary Statistics",
+    col.names = c("Statistic", "Value")
+  )
+
 ```
 
 ```{r}
