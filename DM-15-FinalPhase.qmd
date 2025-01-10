@@ -298,10 +298,7 @@ Figure 3 and 4 displaies respectively the evpolution of the GDP growth rate and 
 
 We know *space* a theoretical framework, affected by empirical evidence, that established a causal relationship between TFP growth and GDP growth.
 
----
-title: "Solow-Swan Model (1956)"
-format: html
----
+
 
 # Solow-Swan Model (1956)
 
