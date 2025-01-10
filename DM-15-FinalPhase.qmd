@@ -322,10 +322,10 @@ Y = (AL)^{1−\alpha}K^{\alpha}
 $$
 
 Where:  
-- \( Y \): production (GDP)  
-- \( K \): stock of capital  
-- \( L \): labor force  
-- \( A \): level of technology  
+-  Y : production (GDP)  
+-  K : stock of capital  
+-  L : labor force  
+-  A : level of technology  
 
 ## Capital Accumulation Equation
 
@@ -334,8 +334,8 @@ $$
 $$
 
 Where:  
-- \( s \): saving rate (also, net investment rate)  
-- \( \delta \): capital depreciation rate  
+- s: saving rate (also, net investment rate)  
+- $\delta$ : capital depreciation rate  
 
 ## Model Predictions
 
