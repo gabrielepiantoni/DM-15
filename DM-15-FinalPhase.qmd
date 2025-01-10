@@ -288,6 +288,17 @@ graph2<-GDP |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
   geom_line()
 ```
+In this part, we show that countries have experienced growth over the past decades, and that this growth is due (that is, is linkled in a causal way)to TFP growth.
+We rely on the model of Solow and Swan (1956), who created a growth model that explains economic growth by accumulation of capital , the increase in the *labour force* (maybe is better to say labour in general) and the technological process, which is measdured by the change in TFP. 
+To do so, we use data from the OECD. We abstracted the nominal GDP of *number* countries, which we *space* into real GDP *by* deflating by the level of the price, using 2015 as the base year (that is, price level is *one* with the consumption price index (CPI)). We then computed the growth rate of the real GDP for our computations. For capital accumulation. we used the growth rate of the GFCF (in real terms) given by OECD and for the labour force increase we computed, using the hours worked/worker per year and the labour force at disposal in each year, the total number of hours worked every year in each country and, then, its growth rate.
+
+Figure 1 and Figure 2 point out that countries have experienced over the past decades, Both show the evolution of GDP per capita from 1995 to 2020 (data contained *...*). We used GDP per capita for the sake of clarity and for it is a better indicator of welfare; from now, we will only use GDP.
+We group countries with similars characteristics to show that growth is a general fact. The Asian Tigers have all experienced all experienced very*space* growth during the second half of the XXi century; the countries that have adopted the euro (2023) *space*
+
+Figure 3 and 4 displaies respectively the evpolution of the GDP growth rate and the one of TFP for Korea (Asian Tigers), France, Germany and USA (no data for China for TFP)The data visualized has suggested a strong correlation, especially for Korea, between TFP and GDP growth.
+
+We know *space* a theoretical framework, affected by empirical evidence, that established a causal relationship between TFP growth and GDP growth.
+
 
 ```{r}
 #| fig.width: 12
