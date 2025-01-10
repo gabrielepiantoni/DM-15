@@ -277,7 +277,6 @@ for (var in yes_no_variables) {
 }
 ```
 
-<<<<<<< HEAD
 
 ```{r}
 #| output: false
@@ -313,8 +312,7 @@ graph2<-GDP |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
   geom_line()
 ```
-=======
->>>>>>> 652f29b51360ad90a3240b00ea4379fe1953a1f6
+
 # Research question presentation
 
 ## Introduction
