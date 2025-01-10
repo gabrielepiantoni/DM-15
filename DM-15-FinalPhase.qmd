@@ -299,6 +299,62 @@ Figure 3 and 4 displaies respectively the evpolution of the GDP growth rate and 
 
 We know *space* a theoretical framework, affected by empirical evidence, that established a causal relationship between TFP growth and GDP growth.
 
+---
+title: "Solow-Swan Model (1956)"
+format: html
+---
+
+# Solow-Swan Model (1956)
+
+The Solow model is based on two simple equations: one production function, one capital accumulation equation. It relies on strong assumptions:
+
+1. Constant return to scale  
+2. Decreasing marginal returns of inputs  
+3. Constant and exogenous saving rate in the economy  
+
+## Production Function
+
+$$
+Y = F(K, L)
+$$
+
+$$
+Y = (AL)^{1−\alpha}K^{\alpha}
+$$
+
+Where:  
+- \( Y \): production (GDP)  
+- \( K \): stock of capital  
+- \( L \): labor force  
+- \( A \): level of technology  
+
+## Capital Accumulation Equation
+
+$$
+\frac{dK}{dt} = sF(K, L) − \delta K
+$$
+
+Where:  
+- \( s \): saving rate (also, net investment rate)  
+- \( \delta \): capital depreciation rate  
+
+## Model Predictions
+
+- Each economy converges toward a long-term steady-state path, where new investment just makes up for the loss in capital due to depreciation.  
+- The steady states can differ from one country to another.  
+- The further away the economy is from its steady state, the higher its growth rate.  
+
+## Long-Term Implications
+
+On the long term, only improvements in technology and the growth of the population lead to growth in production.
+
+Taking logs and derivatives, we find:
+
+$$
+g_Y = \alpha g_K + (1 - \alpha)(g_A + g_L)
+$$
+
+
 
 ```{r}
 #| fig.width: 12
