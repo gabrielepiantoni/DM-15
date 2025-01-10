@@ -125,8 +125,9 @@ colnames(EDUTAIN) <- gsub("\\s\\[YR\\d{4}\\]", "", colnames(EDUTAIN))
 
 # Introduction
 
-  This paper investigate the relationship between research, education and TFP growth. 
-  We start by showing that TFP is worth of interest as it is one of the major drivers of economic growth. That demonstrated, we concentrate on our main goal, determining whether or not research and education trigger TFP growth.
+ In recent decades, most of the countries has achieved sustained positive growth, leading them to a marked improvement in their quality of life.
+That said, recent years have shown, especially in the more developed economies, a slow down in this trend. To date, the consensus seems to agree that the deflation of the explosive growth that persisted for most of the 20th century is to be attributed to a less sustained growth in technical change which, according to theory, is strongly linked to the amount of resources devoted to research and education.
+Well, given the relevance of the topic, we thought it would be interesting to try to determine if the data are coherent with the existence of a causal relationship between the level of research, education and the growth in technical change exists.
 
 # Research question presentation 
 
