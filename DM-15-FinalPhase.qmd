@@ -659,11 +659,7 @@ summary() |>
 ```
 Considering these evidence and the theoretical framework provided, we can believe, with confidence, in the existence of a strong causal relationship between TFP growth and GDP growth.
 
-# Data sets descriptions
 
-# Data analysis
-
-# Conclusion
 
 
 
