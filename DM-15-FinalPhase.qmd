@@ -854,6 +854,166 @@ summary() |>
 Considering these evidence and the theoretical framework provided, we can believe, with confidence, in the existence of a strong causal relationship between TFP growth and GDP growth.
 
 
+```{r}
+# showing the correlation between research spendings and TFP in a graph
+SPENDRD |>
+  full_join(MFP,SPENDRD , by=c("TIME_PERIOD", "Pays")) |>
+  group_by(Pays) |>
+  mutate(value2015=`Millions de dollars US`[TIME_PERIOD=="2015"]) |>
+  mutate(`rsc2015=100`=`Millions de dollars US`/value2015) |>
+  ungroup()|>
+  ggplot(aes(x=`rsc2015=100`, y=`2015=100`))+
+  geom_point() +
+  geom_smooth(method="lm")
+  
+```
+
+```{r}
+# loading institution dataset 
+INST<-read_excel(here("PROJET","Institutions.xlsx"))
+```
+
+```{r}
+# keeping the indicator of interest
+INST <- INST |>
+  filter(indicator=="rq") |>
+  select(countryname, year, estimate)
+```
+
+```{r}
+# Matching country names in INST with the names in french in other data sets, same for the variable Year(to TIME_PERIOD), and change the estimate (to rq) name in prevision for the join
+
+
+englishnames <- c("United States", "France", "Belgium", "Netherlands", "Japan",
+                   "Australia", "New Zealand", "Spain", "Canada", "Germany",
+                   "Ireland", "Denmark", "Portugal", "Sweden", "Italy",
+                   "United Kingdom", "Finland", "Austria", "Switzerland",
+                   "Norway", "Korea", "Israel", "Greece", "Luxembourg")
+
+frenchnames <- c("États-Unis", "France", "Belgique", "Pays-Bas", "Japon",
+                  "Australie", "Nouvelle-Zélande", "Espagne", "Canada", "Allemagne",
+                  "Irlande", "Danemark", "Portugal", "Suède", "Italie",
+                  "Royaume-Uni", "Finlande", "Autriche", "Suisse",
+                  "Norvège", "Corée", "Israël", "Grèce", "Luxembourg")
+
+names <- data.frame(English = englishnames, French = frenchnames)
+
+INST <- INST |>
+  filter(countryname %in% englishnames) |> 
+  left_join(names, by = c("countryname" = "English")) |> 
+  mutate(countryname = French) |> 
+  select(-French) |>
+  rename(Pays=countryname, 
+         TIME_PERIOD = year, 
+         rq = estimate)
+```
+
+```{r}
+# setting rq as a numerical variable
+#|output: false
+typeof(INST$rq)
+```
+
+```{r}
+# setting rq as a numerical variable
+INST <- INST |>
+  mutate(rq=as.numeric(rq))
+```
+
+## Trade
+
+```{r}
+# importing TRADE dataset and selecting relevant variables
+TRADE<-vroom(here("PROJET","Trade.csv"))
+TRADE <- TRADE |>
+  select(Pays, TIME_PERIOD, OBS_VALUE)
+```
+```{r}
+# renaming variable for clarity
+TRADE <- TRADE |>
+  rename(`Imports-millionsUSD` = OBS_VALUE)
+```
+
+```{r}
+# computing ratio/GDP
+
+TRADE <- full_join(TRADE, GDP, by=c("TIME_PERIOD", "Pays" )) |>
+  select(Pays, TIME_PERIOD, RealGDP,`Imports-millionsUSD` )
+TRADE <-TRADE |>
+  mutate(`Imports%GDP`= (`Imports-millionsUSD`/RealGDP)*100) |>
+  select(-RealGDP, -`Imports-millionsUSD`)
+```
+
+
+```{r}
+# selecting GDPperCAPITA in GDP dataset
+GDPcapita <- GDP |>
+  select(Pays, TIME_PERIOD, RealGDPperCapita)
+```
+
+
+```{r}
+# computing the spending in research in base 100 = 2015, removing other variables
+SPENDRD <- SPENDRD |>
+  group_by(Pays) |>
+  mutate(value2015=`Millions de dollars US`[TIME_PERIOD=="2015"]) |>
+  mutate(`rsc2015=100`=(`Millions de dollars US`/value2015)*100) |>
+  ungroup() |>
+  select(-Indicateur, -Sujet, -`% du PIB`, -`Millions de dollars US`, -value2015)
+```
+
+
+```{r}
+# keeping only spendings in tertiary education (USd per student) in TOTALEDUSPEND and arranging it into a variable
+TOTALEDUSPEND <- TOTALEDUSPEND |>
+  filter(Sujet=="Supérieur") |>
+  pivot_wider(names_from=Sujet,
+              values_from=`Dollars US/étudiant`
+  ) |>
+  select(-`% du PIB`, -Indicateur, ) |>
+  rename(`DollarUS/etudiant-Supérieur`=Supérieur)
+```
+
+```{r}
+# selecting the variable indicatig the level of TFP in TFP dataset
+MFP <- MFP |>
+  select(Pays, TIME_PERIOD, `2015=100`)
+```
+
+```{r}
+# joining the differents tables for the regression
+REGRESS <- full_join(MFP, TOTALEDUSPEND, by=c("TIME_PERIOD", "Pays"))
+REGRESS <- full_join(GDPcapita, REGRESS, by=c("TIME_PERIOD", "Pays"))
+REGRESS <- full_join(TRADE, REGRESS, by=c("TIME_PERIOD", "Pays"))
+REGRESS <- full_join(INST, REGRESS, by=c("TIME_PERIOD", "Pays"))
+REGRESS <- full_join(SPENDRD, REGRESS, by=c("TIME_PERIOD", "Pays"))
+```
+
+```{r}
+#|output: false
+colnames(REGRESS)
+```
+
+# Performing regression
+```{r}
+# first regression: effect of spendings in higher education on TFP
+summary(lm(formula =`2015=100`~`Imports%GDP`+ Pays+`DollarUS/etudiant-Supérieur`, data=REGRESS))
+```
+
+```{r}
+# second regression: effect of spendings in research on TFP
+summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+rq+ Pays, data=REGRESS))
+```  
+
+
+
+
+
+
+
+
+
+
 
 
 
