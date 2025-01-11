@@ -488,7 +488,131 @@ finaltable <- data.frame(
 
 kable(finaltable, caption = "Labour force: Mean, Standard Deviation, Number of Observations, Number of Countries, and First/Last Year for CPI")
 ```
+- **Education spending** (source: OECD Data Explorer)
+ Expenditure in education - divided into primary, secondary and tertiary - in both %GDP and US$/Student ratio.
+ 
+```{r}
+stats1 <- TOTALEDUSPEND |> select(`Dollars US/étudiant`) |> pull() |> describe()
 
+mean <- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
+
+ncountries <- TOTALEDUSPEND |> distinct(Pays) |> nrow()
+
+firstyear <- min(TOTALEDUSPEND$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(TOTALEDUSPEND$TIME_PERIOD, na.rm = TRUE)
+
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
+)
+
+kable(finaltable, caption = "Education expenditure: Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
+
+ - **Gross Domestic Spending on R&D** (source: OECD Data Explorer)
+  Gross domestic spending on R&D measured in Million US dollar and percentage of GDP.
+
+```{r}
+stats1 <- SPENDRD |> select(`Millions de dollars US`) |> pull() |> describe()
+
+mean <- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
+
+ncountries <- SPENDRD |> distinct(Pays) |> nrow()
+
+firstyear <- min(SPENDRD$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(SPENDRD$TIME_PERIOD, na.rm = TRUE)
+
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
+)
+
+kable(finaltable, caption = "R&D expenditure: Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
+ - **Trade in good and services** (source: OECD Data Explorer)
+Transaction in goods and services between residents and non-resident in Million US$ at 2015 constant price.
+
+```{r}
+TRADE<-vroom(here("PROJET", "Trade.csv"))
+TRADE<-TRADE|>pivot_wider(names_from = MEASURE, values_from = OBS_VALUE)
+```
+
+```{r}
+
+
+stats1 <- TRADE |> select(`MLN_USD`) |> pull() |> describe()
+
+mean <- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
+
+ncountries <- TRADE |> distinct(Pays) |> nrow()
+
+firstyear <- min(TRADE$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(TRADE$TIME_PERIOD, na.rm = TRUE)
+
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
+)
+
+kable(finaltable, caption = "Trade: Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
+
+
+
+
+
+
+
+```{r}
+
+Institutions<-read_excel(here("PROJET", "Institutions.xlsx"))|>filter(indicator=="rq")|>select(countryname, year, estimate)
+```
+ - **Quality of Regulations** (Source: World Bank Data Bank)
+Perceptions of the ability of the government to formulate and implement sound policies and regulations that permit and promote private sector development
+
+```{r}
+Institutions$estimate<-as.numeric(Institutions$estimate)
+
+stats1 <- Institutions |> select(`estimate`) |> pull() |> describe()
+
+mean <- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
+
+ncountries <- Institutions |> distinct(countryname) |> nrow()
+
+firstyear <- min(Institutions$year, na.rm = TRUE)
+lastyear <- max(Institutions$year, na.rm = TRUE)
+
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
+)
+
+kable(finaltable, caption = "Quality of regulation: Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
 #Data Analysis
 
 ## Stylized facts: the relarionship within groeth rate of GDP and TFP
