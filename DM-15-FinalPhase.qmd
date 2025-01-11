@@ -315,11 +315,205 @@ graph2<-GDP |>
 
 # Research question presentation
 
-## Introduction
+## Introduction to our research question
 
  In recent decades, most of the countries has achieved sustained positive growth, leading them to a marked improvement in their quality of life.
-That said, recent years have shown, especially in the more developed economies, a slow down in this trend. To date, the consensus seems to agree that the deflation of the explosive growth that persisted for most of the 20th century is to be attributed to a less sustained growth in technical change which, according to theory, is strongly linked to the amount of resources devoted to research and education.
-Well, given the relevance of the topic, we thought it would be interesting to try to determine if the data are coherent with the existence of a causal relationship between the level of research, education and the growth in technical change exists.
+That said, recent years have shown, especially in the more developed economies, a slow down in this trend. To date, the consensus seems to agree that the slowdown of the explosive growth that persisted for most of the 20th century is to be attributed to a less sustained increase in technical change which, according to theory, is strongly linked also to the amount of resources devoted to research and education.
+Well, given the relevance of the topic, we thought it would be interesting to analyse the accuracy of the latter hypothesis. Consequently, this paper aims to answer the question: ***is there a causal relationship between resources spent on research, education and growth in technical change?***
+
+## The research structure and the methodology
+
+The research is essentially based on two distinct phases.
+
+A first phase, introduced for the sake of completeness, where the objective is to demonstrate the validity of the neoclassical theory that technological change is the foundation of economic growth. 
+A second phase, the core of the research, where the objective is to answer the research question by determining whether there is indeed a causal relationship between research, education and TFP growth.
+
+In both phases, the use of **panel linear regressions analysis** played a decisive role in the conduct of the research, using models widely supported by the literature as a benchmark.
+
+## The Framework
+
+Since the purpose of our research was to highlight a possible causal relationship in a broad sense, essentially no constraints were placed on either the time frame considered or the countries examined.
+
+## The ultimate goal
+
+This paper aims to verify a causal relationship. The ultimate goal is to empirically and statistically highlight the centrality of research and education in the economic development of a country, confirming the theory as a starting point for the design of economic policies.
+
+# Data Description
+
+ - **Gross Domestic Product** (source: OECD Data Explorer).
+Nominal Gross Domestic Product in US$ and US$/capita ratio.
+ 
+```{r}
+library(psych)
+library(dplyr)
+library(knitr)
+
+stats1 <- GDP |> select(`Dollars US/habitant`, `Millions de dollars US`) |> describe()
+
+mean_value <- stats1["mean"]
+sd_value <- stats1["sd"]
+n_value <- stats1["n"]
+
+num_countries <- GDP |> distinct(Pays) |> nrow()
+
+first_year <- min(GDP$TIME_PERIOD, na.rm = TRUE)
+last_year <- max(GDP$TIME_PERIOD, na.rm = TRUE)
+
+final_table <- data.frame(
+  "mean "= mean_value,
+  "SD" = sd_value,
+  "Observations" = n_value,
+  "Countries" = num_countries,
+  "From" = first_year,
+  "To" = last_year
+)
+
+kable(final_table, caption = "GDP: Mean, Standard Deviation, Number of Observations and Number of Countries")
+
+
+```
+ - **Inflation (CPI)** (source: OECD Data Explorer).
+CPI (Consumption Price Index) considering 2015 as the base year (ie. 2015=100)
+ 
+```{r}
+stats1 <- GDP |> select(CPI) |> pull() |> describe()
+
+mean_value <- stats1["mean"]
+sd_value <- stats1["sd"]
+n_value <- stats1["n"]
+
+num_countries <- GDP |> distinct(Pays) |> nrow()
+
+first_year <- min(GDP$TIME_PERIOD, na.rm = TRUE)
+last_year <- max(GDP$TIME_PERIOD, na.rm = TRUE)
+
+final_table <- data.frame(
+  "mean"= mean_value,
+  "SD" = sd_value,
+  "Observations" = n_value,
+  "Countries" = num_countries,
+  "From" = first_year,
+  "To" = last_year
+)
+
+kable(final_table, caption = "CPI: Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
+
+ - **Multifactor productivity** (source: OECS Data Explorer)
+ Annual growth rate (%) of Total Factor Productivity.
+```{r}
+stats1 <- MFP |> select(`Taux de croissance annuel (%)`) |> pull() |> describe()
+
+mean_value <- stats1["mean"]
+sd_value <- stats1["sd"]
+n_value <- stats1["n"]
+
+num_paesi <- MFP |> distinct(Pays) |> nrow()
+
+first_year <- min(MFP$TIME_PERIOD, na.rm = TRUE)
+last_year <- max(MFP$TIME_PERIOD, na.rm = TRUE)
+
+final_table <- data.frame(
+  "mean"= mean_value,
+  "SD" = sd_value,
+  "Observations" = n_value,
+  "Countries" = num_countries,
+  "From" = first_year,
+  "To" = last_year
+)
+
+kable(final_table, caption = "MFP: Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
+ 
+ - **Investement (GFCF)** (source: OECD Data Explorer)
+ Annual growth rate (%) of GFCF (Gross fixed capital formation)
+```{r}
+stats1 <- K |> select(OBS_VALUE) |> pull() |> describe()
+
+mean_value <- stats1["mean"]
+sd_value <- stats1["sd"]
+n_value <- stats1["n"]
+
+num_countries <- K |> distinct(Pays) |> nrow()
+
+first_year <- min(K$TIME_PERIOD, na.rm = TRUE)
+last_year <- max(K$TIME_PERIOD, na.rm = TRUE)
+
+final_table <- data.frame(
+  "mean"= mean_value,
+  "SD" = sd_value,
+  "Observations" = n_value,
+  "Countries" = num_countries,
+  "From" = first_year,
+  "To" = last_year
+)
+
+kable(final_table, caption = "Investments (GFCF): Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
+ 
+ - **Hours worked** (source: OECD Data Explorer)
+ Hours worked annually expressed as the ratio of total hours worked to the number of workers
+```{r}
+#Pivoting in order to create the statistical summary table
+L1<-L|>pivot_wider( 
+            names_from = Mesure, 
+            values_from = OBS_VALUE)
+```
+
+ 
+```{r}
+stats1 <- L1 |> filter(!is.na(`Heures/travailleur`))|> select(`Heures/travailleur`) |> pull() |> describe()
+
+mean_value <- stats1["mean"]
+sd_value <- stats1["sd"]
+n_value <- stats1["n"]
+
+num_countries <- L1|>select(`Heures/travailleur`, Pays) |> distinct(Pays) |> nrow()
+
+first_year <- min(L1$TIME_PERIOD, na.rm = TRUE)
+last_year <- max(L1$TIME_PERIOD, na.rm = TRUE)
+
+final_table <- data.frame(
+  "mean"= mean_value,
+  "SD" = sd_value,
+  "Observations" = n_value,
+  "Countries" = num_countries,
+  "From" = first_year,
+  "To" = last_year
+)
+
+kable(final_table, caption = ": Hours/worker: Mean, Standard Deviation, Number of Observations and Number of Countries")
+```
+ 
+ - **Labur Force** (source: OECD Data Explorer)
+ Active population expressd in million of units.
+
+```{r}
+stats1 <- L1 |>  select(`Milliers de personnes`) |> pull() |> describe()
+
+
+mean_value <- stats1["mean"]
+sd_value <- stats1["sd"]
+n_value <- stats1["n"]
+
+num_countires <- L1|>select(`Milliers de personnes`, Pays) |> distinct(Pays) |> nrow()
+
+first_year <- min(L1$TIME_PERIOD, na.rm = TRUE)
+last_year <- max(L1$TIME_PERIOD, na.rm = TRUE)
+
+final_table <- data.frame(
+  "mean"= mean_value,
+  "SD" = sd_value,
+  "Observations" = n_value,
+  "Countries" = num_countries,
+  "From" = first_year,
+  "To" = last_year
+)
+
+kable(final_table, caption = "Labour force: Mean, Standard Deviation, Number of Observations, Number of Countries, and First/Last Year for CPI")
+```
+
+#Data Analysis
 
 ## Stylized facts: the relarionship within groeth rate of GDP and TFP
 
