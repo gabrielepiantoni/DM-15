@@ -9,22 +9,7 @@ execute:
   warning: false  
   message: false   
 ---
----
-title: "brutta"
-format: pdf
----
 
----
-title: "DM-15-FinalPhase"
-author: 
-- "Dorian Nadal"
-- "Gabriele Piantoni"
-format: pdf
-execute:
-  echo: false      
-  warning: false  
-  message: false   
----
 
 ```{r}
 #Setting: Here i am
@@ -42,35 +27,8 @@ library(knitr)
 library(broom)
 library(knitr)
 library(patchwork)
-```
-
-```{r}
-#Setting: Data Import
-#| message: false
-EDUSPEND<-vroom(here("PROJET","EDUCATION DATA SETS","Education spending (OECD).csv"))
-EDUTAIN<-vroom(here("PROJET","EDUCATION DATA SETS","Educational attainment, at least completed short-cycle tertiary, population 25+, total (World Bank).csv"))
-GDPMFP<-vroom(here("PROJET","GDP & MFP DATASETS","GDP, MFP and GDP per hour worked (OECD).csv"))
-GROSPEND<-vroom(here("PROJET","R&D DATA SETS","Gross domestic spending in R&D, Researchers per countries & Tridic Patent families (OECD).csv"))
-CPI <-vroom(here("PROJET","CPI.csv"))
-L<-vroom(here("PROJET","L.csv"))
-K<-vroom(here("PROJET","K.csv"))
-```
-```{r}
-#Setting: Here i am
-#| message: false
-here :: i_am("DM-15.Rproj")
-```
-
-```{r}
-#Setting: Packages
-#| message: false
-library(here)
-library(vroom)
-library(tidyverse)
-library(knitr)
-library(broom)
-library(knitr)
-library(patchwork)
+library(psych)
+library(readxl)
 ```
 
 ```{r}
@@ -344,9 +302,6 @@ This paper aims to verify a causal relationship. The ultimate goal is to empiric
 Nominal Gross Domestic Product in US$ and US$/capita ratio.
  
 ```{r}
-library(psych)
-library(dplyr)
-library(knitr)
 
 stats1 <- GDP |> select(`Dollars US/habitant`, `Millions de dollars US`) |> describe()
 
@@ -354,21 +309,21 @@ mean_value <- stats1["mean"]
 sd_value <- stats1["sd"]
 n_value <- stats1["n"]
 
-num_countries <- GDP |> distinct(Pays) |> nrow()
+numcountries <- GDP |> distinct(Pays) |> nrow()
 
-first_year <- min(GDP$TIME_PERIOD, na.rm = TRUE)
-last_year <- max(GDP$TIME_PERIOD, na.rm = TRUE)
+firstyear <- min(GDP$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(GDP$TIME_PERIOD, na.rm = TRUE)
 
-final_table <- data.frame(
+finaltable <- data.frame(
   "mean "= mean_value,
   "SD" = sd_value,
   "Observations" = n_value,
-  "Countries" = num_countries,
-  "From" = first_year,
-  "To" = last_year
+  "Countries" = numcountries,
+  "From" = firstyear,
+  "To" = lastyear
 )
 
-kable(final_table, caption = "GDP: Mean, Standard Deviation, Number of Observations and Number of Countries")
+kable(finaltable, caption = "GDP: Mean, Standard Deviation, Number of Observations and Number of Countries")
 
 
 ```
@@ -378,25 +333,25 @@ CPI (Consumption Price Index) considering 2015 as the base year (ie. 2015=100)
 ```{r}
 stats1 <- GDP |> select(CPI) |> pull() |> describe()
 
-mean_value <- stats1["mean"]
-sd_value <- stats1["sd"]
-n_value <- stats1["n"]
+mean <- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
 
-num_countries <- GDP |> distinct(Pays) |> nrow()
+ncountries <- GDP |> distinct(Pays) |> nrow()
 
-first_year <- min(GDP$TIME_PERIOD, na.rm = TRUE)
-last_year <- max(GDP$TIME_PERIOD, na.rm = TRUE)
+firstyear <- min(GDP$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(GDP$TIME_PERIOD, na.rm = TRUE)
 
-final_table <- data.frame(
-  "mean"= mean_value,
-  "SD" = sd_value,
-  "Observations" = n_value,
-  "Countries" = num_countries,
-  "From" = first_year,
-  "To" = last_year
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
 )
 
-kable(final_table, caption = "CPI: Mean, Standard Deviation, Number of Observations and Number of Countries")
+kable(finaltable, caption = "CPI: Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
 
  - **Multifactor productivity** (source: OECS Data Explorer)
@@ -404,25 +359,25 @@ kable(final_table, caption = "CPI: Mean, Standard Deviation, Number of Observati
 ```{r}
 stats1 <- MFP |> select(`Taux de croissance annuel (%)`) |> pull() |> describe()
 
-mean_value <- stats1["mean"]
-sd_value <- stats1["sd"]
-n_value <- stats1["n"]
+mean <- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
 
-num_paesi <- MFP |> distinct(Pays) |> nrow()
+num <- MFP |> distinct(Pays) |> nrow()
 
-first_year <- min(MFP$TIME_PERIOD, na.rm = TRUE)
-last_year <- max(MFP$TIME_PERIOD, na.rm = TRUE)
+firstyear <- min(MFP$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(MFP$TIME_PERIOD, na.rm = TRUE)
 
-final_table <- data.frame(
-  "mean"= mean_value,
-  "SD" = sd_value,
-  "Observations" = n_value,
-  "Countries" = num_countries,
-  "From" = first_year,
-  "To" = last_year
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = num,
+  "From" = firstyear,
+  "To" = lastyear
 )
 
-kable(final_table, caption = "MFP: Mean, Standard Deviation, Number of Observations and Number of Countries")
+kable(finaltable, caption = "MFP: Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
  
  - **Investement (GFCF)** (source: OECD Data Explorer)
@@ -430,22 +385,22 @@ kable(final_table, caption = "MFP: Mean, Standard Deviation, Number of Observati
 ```{r}
 stats1 <- K |> select(OBS_VALUE) |> pull() |> describe()
 
-mean_value <- stats1["mean"]
-sd_value <- stats1["sd"]
-n_value <- stats1["n"]
+mean<- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
 
-num_countries <- K |> distinct(Pays) |> nrow()
+ncountries <- K |> distinct(Pays) |> nrow()
 
-first_year <- min(K$TIME_PERIOD, na.rm = TRUE)
-last_year <- max(K$TIME_PERIOD, na.rm = TRUE)
+firstyear <- min(K$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(K$TIME_PERIOD, na.rm = TRUE)
 
-final_table <- data.frame(
-  "mean"= mean_value,
-  "SD" = sd_value,
-  "Observations" = n_value,
-  "Countries" = num_countries,
-  "From" = first_year,
-  "To" = last_year
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
 )
 
 kable(final_table, caption = "Investments (GFCF): Mean, Standard Deviation, Number of Observations and Number of Countries")
@@ -464,22 +419,22 @@ L1<-L|>pivot_wider(
 ```{r}
 stats1 <- L1 |> filter(!is.na(`Heures/travailleur`))|> select(`Heures/travailleur`) |> pull() |> describe()
 
-mean_value <- stats1["mean"]
-sd_value <- stats1["sd"]
-n_value <- stats1["n"]
+mean<- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
 
-num_countries <- L1|>select(`Heures/travailleur`, Pays) |> distinct(Pays) |> nrow()
+ncountries <- L1|>select(`Heures/travailleur`, Pays) |> distinct(Pays) |> nrow()
 
-first_year <- min(L1$TIME_PERIOD, na.rm = TRUE)
-last_year <- max(L1$TIME_PERIOD, na.rm = TRUE)
+firstyear <- min(L1$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(L1$TIME_PERIOD, na.rm = TRUE)
 
-final_table <- data.frame(
-  "mean"= mean_value,
-  "SD" = sd_value,
-  "Observations" = n_value,
-  "Countries" = num_countries,
-  "From" = first_year,
-  "To" = last_year
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
 )
 
 kable(final_table, caption = ": Hours/worker: Mean, Standard Deviation, Number of Observations and Number of Countries")
@@ -492,22 +447,22 @@ kable(final_table, caption = ": Hours/worker: Mean, Standard Deviation, Number o
 stats1 <- L1 |>  select(`Milliers de personnes`) |> pull() |> describe()
 
 
-mean_value <- stats1["mean"]
-sd_value <- stats1["sd"]
-n_value <- stats1["n"]
+mean <- stats1["mean"]
+sd <- stats1["sd"]
+n <- stats1["n"]
 
-num_countires <- L1|>select(`Milliers de personnes`, Pays) |> distinct(Pays) |> nrow()
+ncountires <- L1|>select(`Milliers de personnes`, Pays) |> distinct(Pays) |> nrow()
 
-first_year <- min(L1$TIME_PERIOD, na.rm = TRUE)
-last_year <- max(L1$TIME_PERIOD, na.rm = TRUE)
+firstyear <- min(L1$TIME_PERIOD, na.rm = TRUE)
+lastyear <- max(L1$TIME_PERIOD, na.rm = TRUE)
 
-final_table <- data.frame(
-  "mean"= mean_value,
-  "SD" = sd_value,
-  "Observations" = n_value,
-  "Countries" = num_countries,
-  "From" = first_year,
-  "To" = last_year
+finaltable <- data.frame(
+  "mean"= mean,
+  "SD" = sd,
+  "Observations" = n,
+  "Countries" = ncountries,
+  "From" = firstyear,
+  "To" = lastyear
 )
 
 kable(final_table, caption = "Labour force: Mean, Standard Deviation, Number of Observations, Number of Countries, and First/Last Year for CPI")
