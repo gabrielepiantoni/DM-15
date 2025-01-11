@@ -1226,14 +1226,9 @@ Education on the other hand can be seen as an investment in Human Capital, which
 
 We choose here to investigate the link between annual research spendings in countries, which is a good proxy of the research effort, and the level of TFP, as well as the effect of the spendings in higher education on the TFP level. 
 To do so, in order to have information about the level of TFP, we use an index of the TFP level that takes the value 100 in 2015 and give, for each year, the relative value to 2015. We did the same calculation for research spendings, normalizing them for every country as 100 in 2015 to not include in our calculations the effect of the huge differences of level of investment in R&D that exist between countries and concentrate on variations on the relative value of investment to 2015 to the same mesure of TFP. For education, we use the amount of us dollar spent each year per student in higher education as it is representative of the real investment in human capital at the personal level. 
-
-Graph (number pf the graph) shows a clear positive relationship between TFP level and spendings in R&D. When performing a linear regression, we find a positive and highly significant coefficient. 
-When we control for the quality of institutions, which is an important matter for TFP, the exposition to trade and the level of TFP,we find a less important and significant coefficient but still at a very high level, which indicate a robust positive relationship between the two variables. 
-
+ 
 Result interpretation : 
 
-
-Regression without control 
 
 Regression with control 
 
