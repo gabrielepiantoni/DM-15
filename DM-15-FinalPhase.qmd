@@ -613,7 +613,7 @@ finaltable <- data.frame(
 
 kable(finaltable, caption = "Quality of regulation: Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
-#Data Analysis
+# Data Analysis
 
 ## Stylized facts: the relarionship within groeth rate of GDP and TFP
 
