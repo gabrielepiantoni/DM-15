@@ -1230,7 +1230,21 @@ To do so, in order to have information about the level of TFP, we use an index o
 Result interpretation : 
 
 
-Regression with control 
+Research :
+
+Table (number of table) show the result of regressing... on ... controlling for ... because...
+
+Rsc2015=100 : a one unit increase in the relative of research spendings (base 100 in 2015) is associated with a 0.05 increase in TFP relative level (base 100 in 2015), highly significant (P<0.01)
+Imports : a one 1% increase in the weight of imports relative to GDP is associated with a 0.24 unit increase in TFP relative level
+Rq : a 0.1 point increase in regulatory quality is associated with a 0.62 increase in TFP relative level
+
+These results combined with the existing theory suggests that there exists a positive causal relationship between R&D spendings and TFP. Some remarks are to be done about it. The very low coefficient can be the consequence of several factors, on one hand, our subset of countries only embodies very highly developed economies with high level of spendings in R&D, as shown in table 8 (mean of the spendings in R&D in the subset), consequently, there is not a lot of variation in the explanatory variable. However, the facts that, even with this issue the coefficient remains significantely positive suggests that this relationship is robust. On the other hand, recent economic research has shown a large decrease in research efficiency : research spendings have increased consequently, whereas the number of patent and TFP growth do not seem to grow accordingly. It is very likely that we captured that in our result as we concentrate on the last three decades and that the causality we aim at demonstrating is less and less important.
+ 
+Education : 
+
+Table (number of table) show the result of regressing... on ... controlling for ... because...
+
+
 
 Problems : not that much variation in the explanatory variables, since the set of countries we use only contains high developed economies,
 
