@@ -403,7 +403,7 @@ finaltable <- data.frame(
   "To" = lastyear
 )
 
-kable(final_table, caption = "Investments (GFCF): Mean, Standard Deviation, Number of Observations and Number of Countries")
+kable(finaltable, caption = "Investments (GFCF): Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
  
  - **Hours worked** (source: OECD Data Explorer)
@@ -437,7 +437,7 @@ finaltable <- data.frame(
   "To" = lastyear
 )
 
-kable(final_table, caption = ": Hours/worker: Mean, Standard Deviation, Number of Observations and Number of Countries")
+kable(finaltable, caption = ": Hours/worker: Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
  
  - **Labur Force** (source: OECD Data Explorer)
@@ -465,7 +465,7 @@ finaltable <- data.frame(
   "To" = lastyear
 )
 
-kable(final_table, caption = "Labour force: Mean, Standard Deviation, Number of Observations, Number of Countries, and First/Last Year for CPI")
+kable(finaltable, caption = "Labour force: Mean, Standard Deviation, Number of Observations, Number of Countries, and First/Last Year for CPI")
 ```
 
 #Data Analysis
