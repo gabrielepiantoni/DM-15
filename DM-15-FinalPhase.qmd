@@ -952,13 +952,53 @@ colnames(REGRESS)
 # Performing regression
 ```{r}
 # first regression: effect of spendings in higher education on TFP
-summary(lm(formula =`2015=100`~`Imports%GDP`+ Pays+`DollarUS/etudiant-Supérieur`, data=REGRESS))
+summary(lm(formula =`2015=100`~`Imports%GDP`+ Pays+`DollarUS/etudiant-Supérieur`, data=REGRESS))|>
+  tidy()|>
+  mutate(p.value=as.character(p.value))|>
+  kable( 
+      caption = "Summary of Linear Model Coefficients", 
+      col.names = c("Term", "Estimate", "Std. Error", "t value", "p value"))
 ```
 
 ```{r}
+# first regression: summary statistics
+summary(lm(formula =`2015=100`~`Imports%GDP`+ Pays+`DollarUS/etudiant-Supérieur`, data=REGRESS))|>
+  (\(x) data.frame(
+    Statistic = c("N", "R2", "Adjusted R2"),
+    Value = c(x$df[1] + x$df[2], x$r.squared, x$adj.r.squared)
+  ))() |>
+  kable(
+    caption = "Model Summary Statistics",
+    col.names = c("Statistic", "Value")
+  )
+
+```
+
+
+```{r}
 # second regression: effect of spendings in research on TFP
-summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+rq+ Pays, data=REGRESS))
+summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+rq+ Pays, data=REGRESS))|>
+  tidy()|>
+  mutate(p.value=as.character(p.value))|>
+  kable( 
+      caption = "Summary of Linear Model Coefficients", 
+      col.names = c("Term", "Estimate", "Std. Error", "t value", "p value"))
 ```  
+
+```{r}
+# second regression : summary statistics
+summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+rq+ Pays, data=REGRESS))|>
+  (\(x) data.frame(
+    Statistic = c("N", "R2", "Adjusted R2"),
+    Value = c(x$df[1] + x$df[2], x$r.squared, x$adj.r.squared)
+  ))() |>
+  kable(
+    caption = "Model Summary Statistics",
+    col.names = c("Statistic", "Value")
+  )
+
+```
+
 
 
 
