@@ -239,6 +239,7 @@ for (var in yes_no_variables) {
 ```{r}
 #| output: false
 #Graphs: Real GDP per capita - Euro Area and GB, ASIANTIGERS, China, united states
+
 graph1 <-GDP |>
   pivot_longer(cols = c("cEtatsUnis", 
                    "cAsianTigers", 
@@ -249,9 +250,20 @@ graph1 <-GDP |>
                ) |>
   filter(!is.na(avgGDP)) |>
   filter(TIME_PERIOD >=1995) |>
-  ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
-  geom_line()
+  ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region, group=Region)) +
+  geom_line(size=1.4)+
+  scale_color_manual(
+    values = c("darkred", "blue", "darkgreen", "darkorange"),
+                     labels = c("Asian Tigers", "China", "United States", "EuroArea and Great Britain"))+
+  labs(
+    title = "GDP per capita by Region (1995-2020)",
+    x = "Year",
+    y = "Real GDP per capita",
+    color = "Region"
+  ) 
+
 ```
+
 
 ```{r}
 #| output: false
@@ -268,7 +280,16 @@ graph2<-GDP |>
   filter(!is.na(avgGDP)) |>
   filter (TIME_PERIOD>=1995) |>
   ggplot(aes(y=avgGDP, x=TIME_PERIOD, color=Region)) +
-  geom_line()
+  geom_line(size=1.4)+
+  scale_color_manual(
+    values = c("darkred", "blue", "darkgreen", "darkorange", "grey"),
+                     labels = c("Central Europe", "Eastern Europe", "Europe", "Northern Europe", "Southern Europe"))+
+  labs(
+    title = "GDP per capita by Region - Europe (1995-2020)",
+    x = "Year",
+    y = "Real GDP per capita",
+    color = "Region"
+  ) 
 ```
 
 # Research question presentation
@@ -500,10 +521,24 @@ arrange(TIME_PERIOD)|> mutate(growth_rateY = ((RealGDP- lag(RealGDP)) / lag(Real
 ```{r}
 #| output: false
 #Graphs: Growth_rate GDP - Germany, France, US and South Corea
-graph3 <-GDP |>
-  filter(Pays=="France"|Pays== "États-Unis"|Pays== "Allemagne"|Pays== "Corée") |>
-  ggplot(aes(x=TIME_PERIOD, y=growth_rateY, color=Pays)) +
-  geom_smooth(method="lm", se=FALSE)
+graph3 <- GDP |>
+  filter(Pays %in% c("France", "États-Unis", "Allemagne", "Corée")) |>
+  ggplot(aes(x = TIME_PERIOD, y = growth_rateY, color = Pays)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_color_manual(
+    values = c("darkred", "darkorange", "darkgreen", "grey"),
+    labels = c("France" = "France", 
+               "États-Unis" = "United States", 
+               "Allemagne" = "Germany", 
+               "Corée" = "South Korea")
+  ) +
+  labs(
+    title = "GDP Growth Rate",
+    x = "Time Period",
+    y = "Growth Rate of GDP",
+    color = "Country"
+  )
+
 
 ```
 
@@ -513,7 +548,20 @@ graph3 <-GDP |>
 graph4<-MFP|>
    filter(Pays=="France"|Pays== "Chine (République populaire de)"|Pays== "États-Unis"|Pays== "Allemagne"|Pays== "Corée") |>
   ggplot(aes(x=TIME_PERIOD, y=`Taux de croissance annuel (%)`, color=Pays)) +
-  geom_smooth(method="lm", se=FALSE)
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_color_manual(
+    values = c("darkred", "darkorange", "darkgreen", "grey"),
+    labels = c("France" = "France", 
+               "États-Unis" = "United States", 
+               "Allemagne" = "Germany", 
+               "Corée" = "South Korea")
+  ) +
+  labs(
+    title = "TFP Growth Rate",
+    x = "Time Period",
+    y = "Growth Rate of TFP",
+    color = "Country"
+  )
 ```
 ### Not all that glitters is gold: the slowdown in economic growth
 
@@ -660,6 +708,10 @@ graph5 <- ggplot(Solow1, aes(x = "", y = Value, fill = Component)) +
     y = "Growth Rate Contribution",
     fill = "Component"
   ) +
+  scale_fill_brewer(
+    palette = "Set2")+
+  theme(
+    plot.title = element_text(face = "bold", size = 40))+
   theme_minimal() +
   theme(legend.position = "none", axis.text.x = element_blank(), axis.ticks.x = element_blank())
 ```
@@ -701,6 +753,16 @@ Solow3 <- Solow2 |>
 # Bar chart decomposition
 graph6<-ggplot(Solow3, aes(x = "", y = Value, fill = Component)) +
   geom_bar(stat = "identity") +
+  labs(
+    title = NULL,
+    x = NULL,
+    y = NULL,
+    fill = "Component"
+  ) +
+ scale_fill_brewer(
+    palette = "Set2")+
+  theme_minimal() +
+  theme(legend.position = "none", axis.text.x = element_blank(), axis.ticks.x = element_blank())
   theme_minimal() +
   theme(legend.position = "none", axis.text.x = element_blank(), axis.ticks.x = element_blank())
 ```
@@ -740,7 +802,15 @@ Solow5 <- Solow4 |>
 
 # Bar chart decomposition
 graph7 <-ggplot(Solow5, aes(x = "", y = Value, fill = Component)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity")  +
+  labs(
+    title = NULL,
+    x = NULL,
+    y = NULL,
+    fill = "Component"
+  ) +scale_fill_brewer(
+    palette = "Set2",
+    labels = c("growth_rate_totalA"="TFP share","growth_rate_totalK"="Capital share", "growth_rate_totalL"="Labour share", "others"="Others"))+
   theme_minimal() +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 ```
