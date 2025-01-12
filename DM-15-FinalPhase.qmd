@@ -1003,6 +1003,28 @@ summary() |>
 Considering these evidence and the theoretical framework provided, we can believe, with confidence, in the existence of a strong causal relationship between TFP growth and GDP growth.
 
 
+```{r}
+# showing the correlation between research spendings and TFP in a graph
+SPENDRD |>
+  full_join(MFP,SPENDRD , by=c("TIME_PERIOD", "Pays")) |>
+  group_by(Pays) |>
+  mutate(value2015=`Millions de dollars US`[TIME_PERIOD=="2015"]) |>
+  mutate(`rsc2015=100`=`Millions de dollars US`/value2015) |>
+  ungroup()|>
+ggplot(aes(x = `rsc2015=100`, y = `2015=100`)) +
+  geom_point(size = 1, alpha = 0.5)+
+  geom_smooth(method = "lm", se = FALSE, size = 1.2) +
+  labs(
+    title = "Relationship Between Research and TFP",
+    x = "Research Spending",
+    y = "TFP",    
+   ) +
+  theme_minimal() + 
+  theme(
+    plot.title = element_text(size = 16, face = "bold")
+  ) +
+  theme(legend.position = "none")
+```
 
 
 
