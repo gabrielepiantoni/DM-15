@@ -1194,7 +1194,7 @@ summary(lm(formula =`2015=100`~`Imports%GDP`+ Pays+`DollarUS/etudiant-Supérieur
 
 ```{r}
 # second regression: effect of spendings in research on TFP
-summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+rq+ Pays, data=REGRESS))|>
+summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+ Pays, data=REGRESS))|>
   tidy()|>
   mutate(p.value=as.character(p.value))|>
   kable( 
@@ -1204,7 +1204,7 @@ summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+rq+ Pays, data=REGRES
 
 ```{r}
 # second regression : summary statistics
-summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+rq+ Pays, data=REGRESS))|>
+summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+ Pays, data=REGRESS))|>
   (\(x) data.frame(
     Statistic = c("N", "R2", "Adjusted R2"),
     Value = c(x$df[1] + x$df[2], x$r.squared, x$adj.r.squared)
@@ -1244,13 +1244,17 @@ To do so, in order to have information about the level of TFP, we use an index o
 ## Result interpretation : 
 
 
-Research :
+### Research :
 
 Table (number of table) show the result of regressing... on ... controlling for ... because...
 
-It shows that a one unit increase in the relative of research spendings (base 100 in 2015) is associated with a highly significant (P<0.01) 0.05 increase in TFP relative level (base 100 in 2015) ; a one 1% increase in the weight of imports relative to GDP is associated with a 0.24 unit increase in TFP relative level and that a 0.1 point increase in regulatory quality is associated with a 0.62 increase in TFP relative level
+It shows that a one unit increase in the relative value of research spendings (base 100 in 2015) is associated with a highly significant (P<0.01) 0.09 increase in TFP relative level (base 100 in 2015) with a robust standard error ; a one 1% increase in the weight of imports relative to GDP is associated with a 0.56 unit increase in TFP relative level.
 
-These results combined with the existing theory suggests that there exists a positive causal relationship between R&D spendings and TFP. Some remarks are to be done about it. The very low coefficient can be the consequence of several factors, on one hand, our subset of countries only embodies very highly developed economies with high level of spendings in R&D, as shown in table 8 (mean of the spendings in R&D in the subset), consequently, there is not a lot of variation in the explanatory variable. However, the facts that, even with this issue the coefficient remains significantly positive suggests that this relationship is robust. On the other hand, recent economic research has shown a large decrease in research efficiency : research spendings have increased consequently, whereas the number of patent and TFP growth do not seem to grow accordingly. It is very likely that we captured that in our result as we concentrate on the last three decades and that the causality we aim at demonstrating is less and less important. Finally it is interesting to notice that, according to the recent work of ... (...) higher quality of institutions, captured by the regulatory quality index of the world bank that we used as a control variable, is significantly associated with higher TFP. 
+These results combined with the existing theory and the high R2 suggests that there exists a positive causal relationship between R&D spendings and TFP. Some remarks are to be done about it. 
+The very low coefficient can be the consequence of several factors, on one hand, our subset of countries only embodies very highly developed economies with high level of spendings in R&D and of TFP, as shown in table 8 (mean of the spendings in R&D in the subset), consequently, there is not a lot of variation in the explanatory variable. However, the facts that, even with this issue the coefficient remains significantly positive suggests that this relationship is robust. 
+It is interesting to notice that when we perform the same regression on Korea, a country that have experienced very rapid growth in the contemporary period ( table ...), we find a much higher coefficient, still highly significant and a very good fit of the model (R2 close of 0.95). this result confirms our conclusion and suggests additionally that in countries experiencing rapid growth, the research effort plays central role. 
+On the other hand, recent economic research has shown a large decrease in research efficiency : research spendings have increased consequently, whereas the number of patent and TFP growth do not seem to grow accordingly. It is very likely that we captured that in our result as we concentrate on the last three decades and that the causality we aim at demonstrating is less and less important. 
+Finally Table ... shows that, according to the recent work of ... (...), when controlling for quality of institutions, with the regulatory quality index of the world bank, we observe that the effect of research on TFP is reduced and that higher quality of institutions is significantly associated with higher TFP even though it reduces the model fit. 
  
 Education : 
 
@@ -1264,6 +1268,18 @@ Problems : not that much variation in the explanatory variables, since the set o
 
 
 
+```{r}
+REGRESS1 <- REGRESS |>
+  filter(Pays=="Japon")
+summary(lm(formula =`2015=100`~`rsc2015=100`+ `Imports%GDP`, data=REGRESS1))
+```
+
+```{r}
+REGRESS |>
+  distinct(TIME_PERIOD) |>
+```
+
+and that a 0.1 point increase in regulatory quality is associated with a 0.62 increase in TFP relative level
 
 
 
