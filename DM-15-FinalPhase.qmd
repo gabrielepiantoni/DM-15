@@ -296,15 +296,12 @@ graph2<-GDP |>
 
 
  In recent decades, most of the countries has achieved sustained positive growth, leading them to a marked improvement in their quality of life.
-That said, recent years have shown, especially in the more developed economies, a slow down in this trend. To date, the consensus seems to agree that the slowdown of the explosive growth that persisted for most of the 20th century is to be attributed to a less sustained increase in technical change which, according to theory, is strongly linked also to the amount of resources devoted to research and education.
+That said, recent years have shown, especially in the more developed economies, a slow down in this trend. To date, the consensus seems to agree that the slowdown of economic growth in the recent period is to be attributed to a less sustained increase in technical change which, according to theory, is positively linked to the amount of resources devoted to research and education.
 Well, given the relevance of the topic, we thought it would be interesting to analyse the accuracy of the latter hypothesis. Consequently, this paper aims to answer the question: ***is there a causal relationship between resources spent on research, education and growth in technical change?***
 
-## Structure
-
-The work is conducted in two  phases.
-
+The paper is structured in two  phases.
 In the first phase, we try to establish if the data in our possession is consistent with the neoclassical theory that states that technological change is the foundation of economic growth. 
-The second phase is devoted to the study of the relationship between research, education and TFP growth.
+The second phase is dedicated to the study of the relationship between research, education and TFP growth.
 
 # Data Description
 
@@ -606,14 +603,16 @@ kable(finaltable, caption = "Quality of regulation: Mean, Standard Deviation, Nu
 
 ## TFP and GDP growth
 
-As mentioned above, the economic development of several countries has undergone positive growth in recent decades. In the following graphs (*Graph 1* and *Graph 2*), this phenomenon is highlighted. 
+The economic development of several countries has undergone positive growth in recent decades. In the following graphs (**Graph 1** and **Graph 2**), this phenomenon is highlighted. 
 
-With the aim of obtaining a representation of the economic development of a selected group of countries and to express the level of welfare, the graphs below displays the real GDP per capita - obtaining by deflating the nominal GDP with the CPI (consumption price index), using the common formula - over the period between 1995 and 2020.
+With the aim of obtaining a representation of the economic development of a selected group of countries and to express the level of welfare, the graphs below displays the real GDP per capita - obtaining by deflating the nominal GDP with the CPI (Consumption Price Index), using the common formula - over the period between 1995 and 2020.
 
 More in detail,
 
  - *Graph 1* contains data for the USA, Asian Tigers (North Korea and Singapore), China and EuroArea (2023).
  - *Graph 2* contains data for European countries by geographical location
+ 
+ 
 ```{r}
 #| fig.width: 12
 #| fig.height: 4
@@ -675,9 +674,9 @@ graph4<-MFP|>
   )
 ```
 
-Economic literature theorizes the centrality of technical change within economic expansion.  *Graph 4*, together with *Graph 3*, attempts to give an initial empirical insight into this relationship. Solow and Swan (1956) model draw as conclusion that short term growth is led by the accumulation of capital up to the point at which new capital just makes up for the depreciation of existing capital. At this steady state, only TFP growth, that is technological progress, allow for long term growth and push back infinitely the stationary point.
+Economic literature theorizes the centrality of technical change within economic expansion.  **Graph 3** and **Graph 4** attempt to give an initial empirical insight into this relationship. Solow and Swan (1956) model draw as conclusion that short term growth is led by the accumulation of capital up to the point at which new capital just makes up for the depreciation of existing capital. At this steady state, only TFP growth, that is technological progress, allow for long term growth in GDP per capita (when considering GDP, also population growth is a factor of long term growth) and push back infinitely the stationary point. 
 
-*Graph 4*, considers the same countries used in the previous chart and displays the growth rate of TFP growth between 1970 and 2020. *Graph 3* displays the evolution of the growth rate of GDP for the same subset of countries. A visual comparison of these figures suggests that GDP growth and TFP growth positively co-move, hence, that theory prediction is accurate.
+**Graph 3** and **Graph 4** considers a subset of the countries used in the previous chart and displays the growth rate of TFP and GDP between 1970 and 2020. A visual comparison of these figures suggests that GDP growth and TFP growth positively co-move, hence, that theory prediction is accurate.
 ```{r}
 #| fig.width: 12
 #| fig.height: 4
@@ -768,9 +767,11 @@ Taking logs and derivatives with respect to time, output growth (i.e. GDP = Y) c
 $$
 g_Y = \alpha g_K + (1 - \alpha)(g_A + g_L)
 $$
-$\alpha$=1/3 is the commonly used value for the share of capital in production, Kaldor (1957) demonstrates that this value tends to remain constant over time.
+where $\alpha$=1/3 is the commonly used value for the share of capital in production; Kaldor (1957) demonstrates that this value tends to remain constant over time.
 
-*Figure 5*, which considers the USA, France and Germany, decomposes the growth that occurred over the 30-year period according to the model formula. The component "others", that contributes negatively to the growth for each country, captures the variation unexplained by the model. Its low value show that the model fits well with the data. We observe that, as predicted by the Solow-Swan growth model (1956), technological progress accounts for a major part of the economic growth of the period.  
+**Figure 5**, which considers the USA, France and Germany, decomposes the growth that occurred over the 30-year period according to the model formula. The component "others", that contributes negatively to the growth for each country, captures the variation unexplained by the model. Its low value show that the model fits well with the data. We observe that, as predicted by the Solow-Swan growth model (1956), technological progress accounts for a major part of the economic growth of the period.  
+
+
 ```{r}
 # France
 # Solow-Swan model
@@ -926,7 +927,7 @@ graph7 <-ggplot(Solow5, aes(x = "", y = Value, fill = Component)) +
 graph5+graph6+graph7
 ```
 
-*Table 1* shows the result of regressing $g_L$, $g_K$ and $g_A$ as explanatory variables on $g_Y$ (i.e. dependent variable). High statistical significance levels (ie. p value < 0.1) are met and an interesting coefficient is attributed to the $g_A$ component, emphasising the role of TFP growth as the main driver of economic growth.
+**Table 11** shows the result of regressing $g_L$, $g_K$ and $g_A$ as explanatory variables on $g_Y$ (i.e. dependent variable). High statistical significance levels (ie. p value < 0.1) are met and an interesting coefficient is attributed to the $g_A$ component, emphasising the role of TFP growth as the main driver of economic growth.
 
 ```{r}
 #linear model : regression of L, K, A on Y
@@ -937,7 +938,7 @@ summary(lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA, data=na
       caption = "Summary of Linear Model Coefficients", 
       col.names = c("Term", "Estimate", "Std. Error", "t value", "p value"))
 ```
-On the other hand, *Table 2* shows a  $R^2$ and an adjusted $R^2$ of 0.32. Nevertheless, considering that the aim of our model is not to make forecasts, we can be satisfied with such a value.
+On the other hand, **Table 12** shows a  $R^2$ and an adjusted $R^2$ of 0.32. Nevertheless, considering that the aim of our model is not to make forecasts, we can be satisfied with such a value.
 ```{r}
 lm(formula =growth_rateY~growth_rateK+growth_rateL+growth_rateA, data=na.exclude(Dec))|>
 summary() |>
@@ -953,7 +954,7 @@ summary() |>
 ```
 
 
-*Table 3* shows the results of the same regression controlling for countries. Again, the significance levels for the above components are statistically acceptable and the coefficients tend to the values previously obtained. In addition, the coefficient for the binary variable associated with countries are globally not significant, that is, differences across countries do not add much information about the relation between TFP growth and GDP growth. The $R^2$ is improved compared to the first regression (*Table 4*).
+**Table 13** shows the results of the same regression this time controlling for countries. Again, the significance levels for the above components are statistically acceptable and the coefficients tend to the values previously obtained. In addition, the coefficient for the binary variable associated with countries are globally not significant, that is, differences across countries do not add much information about the relation between TFP and GDP growth. The $R^2$ is improved compared to the first regression (**Table 14**).
 
 
 ```{r}
@@ -982,13 +983,11 @@ summary() |>
 ```
 Considering these evidence and the theoretical framework provided, we can believe, with confidence, in the existence of a strong causal relationship between TFP growth and GDP growth.
 
-
-
 # Research and Education
 
   The previous section shows evidence of a positive causal relationship between TFP growth and GDP growth. We now bring attention to two possible drivers of TFP and investigate the relationship between investment in higher education, research effort and TFP.
 
-  Graph **"Relationship Between Research and TFP"** shows a clear positive relationship between the levels of TFP and investment in R&D. When computing the coefficients of this linear regression **(Tables 15 and 16)**, we find that the coefficient of the line displayed is statistically very significant (P<0.01). This first observation is coherent with intuition and contemporaneous research.
+  Graph **"Relationship Between Research and TFP"** shows a clear positive relationship between the levels of TFP and investment in R&D. When computing the coefficients of this linear regression **(Tables 15 and 16)**, we find that the coefficient of the line displayed is statistically very significant (p-value<0.01). This first observation is coherent with intuition and contemporaneous research.
   
 ```{r}
 # showing the correlation between research spendings and TFP in a graph
@@ -1047,16 +1046,17 @@ Literature, including the Romer model, also put forward the role of trade in inc
 
 
   
-  Education on the other hand can be seen as an investment in Human Capital, which refers to the stock of knowledge, skills, health, and attributes that individuals possess, which enable them to work and produce economic value, an important factor in increasing productivity hence TFP according to economic literature.
+
+Education on the other hand can be seen as an investment in Human Capital, which refers to the stock of knowledge, skills, health, and attributes that individuals possess, which enable them to work and produce economic value, an important factor in increasing productivity hence TFP according to economic literature.
   
 A better education level leads to a more skilled workforce, that can consequently adapt to new technologies used in production, lead innovation (in the adoption of new technologies and as skilled researchers) and work efficiently.
 As production, especially in economically advanced countries, becomes increasingly dependent on knowledge and technology, an educated workforce is essential to achieve higher production outputs. This higher productivity of educated workers can easily be demonstrated at the personal level : every job survey links education and skill level to higher incomes coming from more productive jobs.
 
-Finally, We can also think of some other causal relationships between education and TFP. Education creates common values and social codes, that lead to more social cohesion, less violence and better common decisions, hence leading to better institutions. All these elements are linked to TFP as social and political stability, cohesion, quality of the regulations and institutions foster an efficient combination of labour and capital.
+Moreover, we can also think of some other causal relationships between education and TFP. Education creates common values and social codes, that lead to more social cohesion, less violence and better common decisions, hence leading to better institutions. All these elements are linked to TFP as social and political stability, cohesion, quality of the regulations and institutions foster an efficient combination of labour and capital.
 
 
 
-  For our computations, we use, as a variable to estimate the effect of research effort on TFP, the gross spending in research for each country of our dataset (in real terms) and for the effect of investment on higher education, the spending (in real term) per student for each country of our dataset. We control for Countries to get rid of cross country differences and for the exposition to trade - as it is a major factor of adoption of new technologies by countries - that we measured using the relative value of imports to GDP.
+  For our computations, we use, as a variable to estimate the effect of research effort on TFP, the gross spending in research for each country (in real terms) and, for the effect of investment on higher education, the spending (in real term) per student for each country. In our computation we control for nations - to get rid of cross country differences - and for the exposition to trade - as it is a major factor of adoption of new technologies by countries - that we measured using the relative value of imports to GDP.
   
 ```{r}
 # loading institution dataset 
@@ -1273,7 +1273,7 @@ summary(lm(formula =`2015=100`~`Imports%GDP`+ Pays+`DollarUS/etudiant-Supérieur
 
 
 
-**Tables 17 and 18** shows that a one unit increase in the relative value of research spending (base 100 in 2015) is associated with a highly significant (P<0.01) 0.09 increase in TFP relative level (base 100 in 2015) with a robust standard error ; a one 1% increase in the weight of imports relative to GDP is associated with a 0.56 unit increase in TFP relative level.
+**Tables 17 and 18** shows that a one unit increase in the relative value of research spending (base 100 in 2015) is associated with a highly significant (p-value<0.01) 0.09 increase in TFP relative level (base 100 in 2015) with a robust standard error ; a one 1% increase in the weight of imports relative to GDP is associated with a 0.56 unit increase in TFP relative level.
 
 These results combined with the existing theory and the high R2 suggests that there exists a positive causal relationship between R&D spendings and TFP. Some remarks are to be done about it. 
 
