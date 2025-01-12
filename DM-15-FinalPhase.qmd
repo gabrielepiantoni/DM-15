@@ -1003,53 +1003,7 @@ summary() |>
 Considering these evidence and the theoretical framework provided, we can believe, with confidence, in the existence of a strong causal relationship between TFP growth and GDP growth.
 
 
-```{r}
-# showing the correlation between research spendings and TFP in a graph
-SPENDRD |>
-  full_join(MFP,SPENDRD , by=c("TIME_PERIOD", "Pays")) |>
-  group_by(Pays) |>
-  mutate(value2015=`Millions de dollars US`[TIME_PERIOD=="2015"]) |>
-  mutate(`rsc2015=100`=`Millions de dollars US`/value2015) |>
-  ungroup()|>
-ggplot(aes(x = `rsc2015=100`, y = `2015=100`)) +
-  geom_point(size = 2, alpha = 0.5)+
-  geom_smooth(method = "lm", se = FALSE, size = 1.2) +
-  labs(
-    title = "Relationship Between Research and TFP",
-    x = "Research Spending",
-    y = "TFP",    
-   ) +
-  theme_minimal() + 
-  theme(
-    plot.title = element_text(size = 16, face = "bold")
-  ) +
-  theme(legend.position = "none")
-```
 
-```{r}
-REGP21 <- SPENDRD |>
-  full_join(MFP,SPENDRD , by=c("TIME_PERIOD", "Pays")) |>
-  group_by(Pays) |>
-  mutate(value2015=`Millions de dollars US`[TIME_PERIOD=="2015"]) |>
-  mutate(`rsc2015=100`=`Millions de dollars US`/value2015) |>
-  ungroup()
-  summary(lm(formula=`2015=100`~`rsc2015=100`, data=REGP21)) |>
-  tidy()|>
-  mutate(p.value=as.character(p.value))|>
-  kable( 
-      caption = "Summary of Linear Model Coefficients", 
-      col.names = c("Term", "Estimate", "Std. Error", "t value", "p value"))
-  
-summary(lm(formula=`2015=100`~`rsc2015=100`, data=REGP21))|>
-  (\(x) data.frame(
-    Statistic = c("N", "R2", "Adjusted R2"),
-    Value = c(x$df[1] + x$df[2], x$r.squared, x$adj.r.squared)
-  ))() |>
-  kable(
-    caption = "Model Summary Statistics",
-    col.names = c("Statistic", "Value")
-  )
-```
 
 
 
@@ -1228,27 +1182,81 @@ summary(lm(formula =`2015=100`~`rsc2015=100`+`Imports%GDP`+ Pays, data=REGRESS))
 
 # Research and Education
 
-The previous section analysed and confirmed what has long been theorised in the literature: TFP growth is one of the main drivers of economic expansion. In this section, we will bring attention to the heart core of this research, investigating the relationship between the commitment of resources to education, research and technical progress.
+  The previous section shows evidence of a positive causal relationship between TFP growth and GDP growth. We now bring attention to two possible drivers of TFP and investigate the relationship between investment in higher education, research effort and TFP.
 
-## Research and education: why these two variables? 
+  Graph (number of the graph) shows a clear positive relationship between the levels of TFP and investment in R&D. When computing the coefficients of this linear regression, we find that the coefficient of the line displayed is statistically very significant (P<0.01). This first observation is coherent with intuition and contemporaneous research.
+  
+```{r}
+# showing the correlation between research spendings and TFP in a graph
+SPENDRD |>
+  full_join(MFP,SPENDRD , by=c("TIME_PERIOD", "Pays")) |>
+  group_by(Pays) |>
+  mutate(value2015=`Millions de dollars US`[TIME_PERIOD=="2015"]) |>
+  mutate(`rsc2015=100`=`Millions de dollars US`/value2015) |>
+  ungroup()|>
+ggplot(aes(x = `rsc2015=100`, y = `2015=100`)) +
+  geom_point(size = 2, alpha = 0.5)+
+  geom_smooth(method = "lm", se = FALSE, size = 1.2) +
+  labs(
+    title = "Relationship Between Research and TFP",
+    x = "Research Spending",
+    y = "TFP",    
+   ) +
+  theme_minimal() + 
+  theme(
+    plot.title = element_text(size = 16, face = "bold")
+  ) +
+  theme(legend.position = "none")
+```
 
-For a long time, the economic literature has been searching for what are the key factors for the development of TFP. Here, we decided to focus on two long-standing central drivers: research and education.
+```{r}
+# regressing research on TFP
+REGP21 <- SPENDRD |>
+  full_join(MFP,SPENDRD , by=c("TIME_PERIOD", "Pays")) |>
+  group_by(Pays) |>
+  mutate(value2015=`Millions de dollars US`[TIME_PERIOD=="2015"]) |>
+  mutate(`rsc2015=100`=`Millions de dollars US`/value2015) |>
+  ungroup()
+  summary(lm(formula=`2015=100`~`rsc2015=100`, data=REGP21)) |>
+  tidy()|>
+  mutate(p.value=as.character(p.value))|>
+  kable( 
+      caption = "Summary of Linear Model Coefficients", 
+      col.names = c("Term", "Estimate", "Std. Error", "t value", "p value"))
+  
+summary(lm(formula=`2015=100`~`rsc2015=100`, data=REGP21))|>
+  (\(x) data.frame(
+    Statistic = c("N", "R2", "Adjusted R2"),
+    Value = c(x$df[1] + x$df[2], x$r.squared, x$adj.r.squared)
+  ))() |>
+  kable(
+    caption = "Model Summary Statistics",
+    col.names = c("Statistic", "Value")
+  )
+```
 
-As our intuition does, economic research have put forward the role of R&D or, as it is often called, “findings new ideas”, in increasing TFP.In fact, in various macroeconomic models in which TFP is considered as an endogenous variable, research plays a major role. More specifically, the reference model that has historically made this assumption famous is the one proposed by Romer in 1990, where long-term economic growth is guaranteed by investment in research and its efficiency, ie. how likely it is that researchers come up with new ideas. In the Romer Model, long term growth comes from the development of new intermediate inputs that allow for the production of new final outputs, hence increasing the quantity and variety of goods available in the economy. **In this model, research increases TFP, that is the efficiency of the combination of labour and capital, extensively, that is, by extending the number of final goods produced. We can also consider, beyond the model, that research contributes to increase TFP in an intensive way by increasing labour productivity with new production techniques using less inputs to produce the same output.** Literature, including the Romer model, also put forward that trade increases TFP, an interesting fact that we use in our computation. Indeed, the Romer model lead to the conclusion that Trade increases TFP in two ways : it allows foreign ideas to enter the domestic economy and, by exposing too more competition and broadening the markets (so the profit levels), it increases the optimal level of research. 
 
-Similarly the education factor also plays a central role, especially since it is evidently directly linked to research efficiency. In other words, education can be seen as an investment in Human Capital, which refers to the stock of knowledge, skills, health, and attributes that individuals possess, which enable them to become more efficient, innovate and, consequently, to produce economic value. Hence, it is evident that education cover an important factor in increasing productivity, as predicted by a wide range of literature. As production, especially in economically advanced countries, becomes increasingly dependent on the development of knowledge and technology, an educated workforce is an extremely valuable asset for any country. This higher productivity of educated workers is also confirmed by the countless studies that see, without a shadow of a doubt, a correlation between level of education and salary, which is the monetary representation of the productivity of a factor. **. We can also think of some other causal relationships between education and TFP. Education creates common values and social codes, that lead to more social cohesion, less violence and also to better common decisions, hence leading to better institutions. All these elements are linked to TFP as social and political stability, cohesion, quality of the regulations and institutions foster an efficient combination of labour and capital.**
 
-The reasoning and theoretical insights presented in the previous paragraphs, argues for the presence of a causality between research, education and TFP growth.
+  As our intuition does, economic research have put forward the role of R&D in increasing TFP. Endogenous growth models describe TFP as a dependent variable of the R&D effort. Romer (1990) splits it in two parts: the number of workers implied in R&D and the efficiency of research, that is, how likely it is that researchers come up with a new idea. In this model, long term growth comes from the development of new intermediate inputs that allow for the production of new final outputs, hence increasing the quantity and variety of final goods available in the economy. We can think that research increases TFP (recall : a measure of the efficiency of the combination of labour and capital) not only by allowing the production of a larger variety of good but also with productivity improvement for the existing production. 
+  
+Literature, including the Romer model, also put forward the role of trade in increasing TFP, an interesting fact that we use in our computation. According to Romer, trade indeed allows foreign ideas to enter the domestic economy and, by exposing too more competition and broadening the markets (so the profit levels), it increases the optimal level of research. 
 
-# Dorian's original text
-As TFP is one of the major drivers of economic growth, we now investigate the relationship between spendings in higher education and in research and the level of TFP. 
-Graph (number of the graph) shows a clear positive relationship between the level of TFP and the investment in R&D. When computing a linear regression with the level of research as explanatory variable of the level of R&D, and controlling for differences across countries, we find that the coefficient of the line displayed is statistically very significant (P<0.01). This first observation is coherent with intuition and contemporaneous research.
+For our computations, we decided to use, as a variable to estimate the effect of research effort on TFP, the gross spending in research for each country of our dataset (in real terms). 
 
-As our intuition does, economic research have put forward the role of R&D, or “findings new ideas”, as it is often called, in increasing TFP. Most of the endogenous growth models describe TFP as a dependent variable of the R&D effort. As it is commonly done, Romer (1990) splits it in two parts: the number of workers implied in R&D and the efficiency of research, that is, how likely it is that researchers come up with a new idea. In the Romer model, long term growth comes from the development of new intermediate inputs by the research sector that allow for the production of new final outputs, hence increasing the variety of goods available in the economy. In this model, research increases TFP, that is the efficiency of the combination of labour and capital, extensively, that is, by extending the number of final goods produced. We can also consider, beyond the model, that research contributes to increase TFP in an intensive way by increasing labour productivity with new production techniques using less inputs to produce the same output. Research, including the Romer model, also put forward that trade increases TFP, an interesting fact that we use in our computation. Indeed, the Romer model lead to the conclusion that Trade increases TFP in two ways : it allows foreign ideas to enter the domestic economy and , by exposing too more competition and broadening the markets (so the profit levels), it increases the optimal level of research. 
-Education on the other hand can be seen as an investment in Human Capital, which refers to the stock of knowledge, skills, health, and attributes that individuals possess, which enable them to work and produce economic value, an important factor in increasing productivity hence TFP according to economic research. A better education level leads to a more skilled workforce, that can consequently adapt to new technologies used in production, lead innovation (education and research are linked) and work efficiently. As production, especially in developed economies, is more and more knowledge and technology based, A skilled workforce is an essential asset for countries and leads to higher production output. This link between education and productivity can easily be demonstrated at the personal level : every job survey links education and skill level to higher incomes, which is derived from the higher productivity of educated workers. We can also think of some other causal relationships between education and TFP. Education creates common values and social codes, that lead to more social cohesion, less violence and also to better common decisions, hence leading to better institutions. All these elements are linked to TFP as social and political stability, cohesion, quality of the regulations and institutions foster an efficient combination of labour and capital.
 
-We choose here to investigate the link between annual research spendings in countries, which is a good proxy of the research effort, and the level of TFP, as well as the effect of the spendings in higher education on the TFP level. 
-To do so, in order to have information about the level of TFP, we use an index of the TFP level that takes the value 100 in 2015 and give, for each year, the relative value to 2015. We did the same calculation for research spendings, normalizing them for every country as 100 in 2015 to not include in our calculations the effect of the huge differences of level of investment in R&D that exist between countries and concentrate on variations on the relative value of investment to 2015 to the same mesure of TFP. For education, we use the amount of us dollar spent each year per student in higher education as it is representative of the real investment in human capital at the personal level. 
+  
+  Education on the other hand can be seen as an investment in Human Capital, which refers to the stock of knowledge, skills, health, and attributes that individuals possess, which enable them to work and produce economic value, an important factor in increasing productivity hence TFP according to economic literature.
+  
+A better education level leads to a more skilled workforce, that can consequently adapt to new technologies used in production, lead innovation (in the adoption of new technologies and as skilled researchers) and work efficiently.
+As production, especially in economically advanced countries, becomes increasingly dependent on knowledge and technology, an educated workforce is essential to achieve higher production outputs. This higher productivity of educated workers can easily be demonstrated at the personal level : every job survey links education and skill level to higher incomes coming from more productive jobs.
+
+Finally, We can also think of some other causal relationships between education and TFP. Education creates common values and social codes, that lead to more social cohesion, less violence and better common decisions, hence leading to better institutions. All these elements are linked to TFP as social and political stability, cohesion, quality of the regulations and institutions foster an efficient combination of labour and capital.
+
+
+
+  For our computations, we decided to use, as a variable to estimate the effect of research effort on TFP, the gross spending in research for each country of our dataset (in real terms).
+
+
  
 ## Result interpretation : 
 
@@ -1266,17 +1274,6 @@ On the other hand, recent economic research has shown a large decrease in resear
 Finally Table ... shows that, according to the recent work of ... (...), when controlling for quality of institutions, with the regulatory quality index of the world bank, we observe that the effect of research on TFP is reduced and that higher quality of institutions is significantly associated with higher TFP even though it reduces the model fit. 
  
 Education : 
-
-Table (number of table) show the result of regressing... on ... controlling for ... because...
-
-
-
-Problems : not that much variation in the explanatory variables, since the set of countries we use only contains high developed economies,
-
-
-
-
-
 ```{r}
 REGRESS1 <- REGRESS |>
   filter(Pays=="Corée")
