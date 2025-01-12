@@ -1012,7 +1012,7 @@ SPENDRD |>
   mutate(`rsc2015=100`=`Millions de dollars US`/value2015) |>
   ungroup()|>
 ggplot(aes(x = `rsc2015=100`, y = `2015=100`)) +
-  geom_point(size = 2, alpha = 0.5)+
+  geom_point(size = 1, alpha = 0.5)+
   geom_smooth(method = "lm", se = FALSE, size = 1.2) +
   labs(
     title = "Relationship Between Research and TFP",
@@ -1285,7 +1285,7 @@ summary(lm(formula =`2015=100`~`rsc2015=100`+ `Imports%GDP`, data=REGRESS1))
 
 
 
-When we perform the same regression with Spendings in education per student (Table …) , we find that a hundred dollar increase in the spending per student in higher education is associated with an increase of TFP (relative to 2015) of 0.0448 ; in addition, we find a very similar result for the effect of the exposition to trade. The fit of the model is however significantly lower than for the model for research.
+When we perform the same regression with Spendings in education per student (Table …) , we find that a hundred dollar increase in the spending per student in higher education is associated with a very significant (P<0.01) increase of TFP (relative to 2015) of 0.0448 ; in addition, we find a very similar result for the effect of the exposition to trade. The fit of the model is however significantly lower than for the model for research.
 Although this result associated with the before mentioned theory suggests the existence of a positive causal relationship between spendings in education and TFP level, we encounter the same problem of low variation in our subset of developed countries. 
 
 
