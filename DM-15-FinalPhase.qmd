@@ -1274,12 +1274,11 @@ REGRESS1 <- REGRESS |>
 summary(lm(formula =`2015=100`~`rsc2015=100`+ `Imports%GDP`, data=REGRESS1))
 ```
 
-```{r}
-REGRESS |>
-  distinct(TIME_PERIOD) |>
-```
 
-and that a 0.1 point increase in regulatory quality is associated with a 0.62 increase in TFP relative level
+
+When we perform the same regression with Spendings in education per student (Table …) , we find that a hundred dollar increase in the spending per student in higher education is associated with an increase of TFP (relative to 2015) of 0.0448 ; in addition, we find a very similar result for the effect of the exposition to trade. The fit of the model is however significantly lower than for the model for research.
+Although this result associated with the before mentioned theory suggests the existence of a positive causal relationship between spendings in education and TFP level, we encounter the same problem of low variation in our subset of developed countries. 
+
 
 
 
