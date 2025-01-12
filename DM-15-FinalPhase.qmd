@@ -256,7 +256,7 @@ graph1 <-GDP |>
     values = c("darkred", "blue", "darkgreen", "darkorange"),
                      labels = c("Asian Tigers", "China", "United States", "EuroArea and Great Britain"))+
   labs(
-    title = "GDP per capita by Region (1995-2020)",
+    title = "Graph 1 : GDP per capita by Region (1995-2020)",
     x = "Year",
     y = "Real GDP per capita",
     color = "Region"
@@ -285,7 +285,7 @@ graph2<-GDP |>
     values = c("darkred", "blue", "darkgreen", "darkorange", "grey"),
                      labels = c("Central Europe", "Eastern Europe", "Europe", "Northern Europe", "Southern Europe"))+
   labs(
-    title = "GDP per capita by Region - Europe (1995-2020)",
+    title = "Graph 2 : GDP per capita by Region - Europe (1995-2020)",
     x = "Year",
     y = "Real GDP per capita",
     color = "Region"
@@ -294,28 +294,17 @@ graph2<-GDP |>
 
 # Research question presentation
 
-## Introduction to our research question
 
  In recent decades, most of the countries has achieved sustained positive growth, leading them to a marked improvement in their quality of life.
 That said, recent years have shown, especially in the more developed economies, a slow down in this trend. To date, the consensus seems to agree that the slowdown of the explosive growth that persisted for most of the 20th century is to be attributed to a less sustained increase in technical change which, according to theory, is strongly linked also to the amount of resources devoted to research and education.
 Well, given the relevance of the topic, we thought it would be interesting to analyse the accuracy of the latter hypothesis. Consequently, this paper aims to answer the question: ***is there a causal relationship between resources spent on research, education and growth in technical change?***
 
-## The research structure and the methodology
+## Structure of the work
 
-The research is essentially based on two distinct phases.
+The work is conducted in two  phases.
 
-A first phase, introduced for the sake of completeness, where the objective is to demonstrate the validity of the neoclassical theory that technological change is the foundation of economic growth. 
-A second phase, the core of the research, where the objective is to answer the research question by determining whether there is indeed a causal relationship between research, education and TFP growth.
-
-In both phases, the use of **panel linear regressions analysis** played a decisive role in the conduct of the research, using models widely supported by the literature as a benchmark.
-
-## The Framework
-
-Since the purpose of our research was to highlight a possible causal relationship in a broad sense, essentially no constraints were placed on either the time frame considered or the countries examined.
-
-## The ultimate goal
-
-This paper aims to verify a causal relationship. The ultimate goal is to empirically and statistically highlight the centrality of research and education in the economic development of a country, confirming the theory as a starting point for the design of economic policies.
+In the first phase, we try to establish if the data in our possession is consistent with the neoclassical theory that states that technological change is the foundation of economic growth. 
+The second phase is devoted to the study of the relationship between research, education and TFP growth.
 
 # Data Description
 
@@ -376,7 +365,7 @@ kable(finaltable, caption = "CPI: Mean, Standard Deviation, Number of Observatio
 ```
 
  - **Multifactor productivity** (source: OECS Data Explorer)
- Annual growth rate (%) of Total Factor Productivity.
+ Annual growth rate (%) of Total Factor Productivity. Measure of the TFP.
 ```{r}
 stats1 <- MFP |> select(`Taux de croissance annuel (%)`) |> pull() |> describe()
 
@@ -401,8 +390,8 @@ finaltable <- data.frame(
 kable(finaltable, caption = "MFP: Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
  
- - **Investement (GFCF)** (source: OECD Data Explorer)
- Annual growth rate (%) of GFCF (Gross fixed capital formation)
+ - **Investement (GFCF - Gross fixed capital formation)** (source: OECD Data Explorer)
+ Annual growth rate (%) of GFCF
 ```{r}
 stats1 <- K |> select(OBS_VALUE) |> pull() |> describe()
 
@@ -428,7 +417,7 @@ kable(finaltable, caption = "Investments (GFCF): Mean, Standard Deviation, Numbe
 ```
  
  - **Hours worked** (source: OECD Data Explorer)
- Hours worked annually expressed as the ratio of total hours worked to the number of workers
+ Hours worked annually per worker, expressed as the ratio of total hours worked to the number of workers
 ```{r}
 #Pivoting in order to create the statistical summary table
 L1<-L|>pivot_wider( 
@@ -461,8 +450,8 @@ finaltable <- data.frame(
 kable(finaltable, caption = ": Hours/worker: Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
  
- - **Labur Force** (source: OECD Data Explorer)
- Active population expressd in million of units.
+ - **Labour Force** (source: OECD Data Explorer)
+ Active population in millions.
 
 ```{r}
 stats1 <- L1 |>  select(`Milliers de personnes`) |> pull() |> describe()
@@ -516,7 +505,7 @@ kable(finaltable, caption = "Education expenditure: Mean, Standard Deviation, Nu
 ```
 
  - **Gross Domestic Spending on R&D** (source: OECD Data Explorer)
-  Gross domestic spending on R&D measured in Million US dollar and percentage of GDP.
+  Gross domestic spending on R&D measured in million US dollar and percentage of GDP.
 
 ```{r}
 stats1 <- SPENDRD |> select(`Millions de dollars US`) |> pull() |> describe()
@@ -542,7 +531,7 @@ finaltable <- data.frame(
 kable(finaltable, caption = "R&D expenditure: Mean, Standard Deviation, Number of Observations and Number of Countries")
 ```
  - **Trade in good and services** (source: OECD Data Explorer)
-Transaction in goods and services between residents and non-resident in Million US$ at 2015 constant price.
+Importations in million US$ at 2015 constant price.
 
 ```{r}
 TRADE<-vroom(here("PROJET", "Trade.csv"))
@@ -585,8 +574,8 @@ kable(finaltable, caption = "Trade: Mean, Standard Deviation, Number of Observat
 
 Institutions<-read_excel(here("PROJET", "Institutions.xlsx"))|>filter(indicator=="rq")|>select(countryname, year, estimate)
 ```
- - **Quality of Regulations** (Source: World Bank Data Bank)
-Perceptions of the ability of the government to formulate and implement sound policies and regulations that permit and promote private sector development
+ - **Quality of Regulation** (Source: World Bank Data Bank)
+Perceptions of the ability of the government to formulate and implement sound policies and regulations that permit and promote private sector development.
 
 ```{r}
 Institutions$estimate<-as.numeric(Institutions$estimate)
@@ -615,13 +604,11 @@ kable(finaltable, caption = "Quality of regulation: Mean, Standard Deviation, Nu
 ```
 # Data Analysis
 
-## Stylized facts: the relarionship within groeth rate of GDP and TFP
-
-### The performance of world economies in recent decades: a positive scenario
+### TFP and GDP growth
 
 As mentioned above, the economic development of several countries has undergone positive growth in recent decades. In the following graphs (*Graph 1* and *Graph 2*), this phenomenon is highlighted. 
 
-With the aim of obtaining a more coherent representation of the economic development of a selected group of countries and to express more adequately the level of welfare, the graphs below displays **real GDP per capita** - obtaining applying the inflation (CPI) to the nominalk GDP - over the period between 1995 and 2020.
+With the aim of obtaining a representation of the economic development of a selected group of countries and to express the level of welfare, the graphs below displays the real GDP per capita - obtaining by deflating the nominal GDP with the CPI (consumption price index), using the common formula - over the period between 1995 and 2020.
 
 More in detail,
 
@@ -657,7 +644,7 @@ graph3 <- GDP |>
                "Corée" = "South Korea")
   ) +
   labs(
-    title = "GDP Growth Rate",
+    title = "Graph 3 : GDP Growth Rate",
     x = "Time Period",
     y = "Growth Rate of GDP",
     color = "Country"
@@ -681,13 +668,12 @@ graph4<-MFP|>
                "Corée" = "South Korea")
   ) +
   labs(
-    title = "TFP Growth Rate",
+    title = "Graph 4 : TFP Growth Rate",
     x = "Time Period",
     y = "Growth Rate of TFP",
     color = "Country"
   )
 ```
-### Not all that glitters is gold: the slowdown in economic growth
 
 Although growth in recent decades has remained positive, it has been declining in several world economies. *Graph 3* gives an initial and rough idea of this phenomenon.
 Looking again at some of the countries included in the sample used in *Graph 1* and *Graph 2*, *Graph 3* shows a fall in the **growth rate of real GDP** in countries of global significance, such as the USA, Germany, France and South Korea.
