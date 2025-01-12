@@ -925,7 +925,6 @@ graph7 <-ggplot(Solow5, aes(x = "", y = Value, fill = Component)) +
 #| fig.height: 4
 graph5+graph6+graph7
 ```
- $g_Y$ (i.e. dependent variable) is demonstrated through the components (i.e. independent variables) $g_L$, $g_K$ and $g_A$.
 
 *Table 1* shows the result of regressing $g_L$, $g_K$ and $g_A$ as explanatory variables on $g_Y$ (i.e. dependent variable). High statistical significance levels (ie. p value < 0.1) are met and an interesting coefficient is attributed to the $g_A$ component, emphasising the role of TFP growth as the main driver of economic growth.
 
