@@ -1297,7 +1297,10 @@ Finally **Tables 21 and 22** shows that, according to the recent work of ... (..
 Although this result associated with the before mentioned theory suggests the existence of a positive causal relationship between spendings in education and TFP level, we encounter the same problem of low variation in our subset of developed countries. 
 
 
+# Conclusion
 
+In conclusion, this paper has first of all provided evidence of the existence of a casual correlation between GDP and TFP growth, confirming what theory predicts. This conclusion underlined the importance of technical progress, and consequently its determinants, in the economic expansion and welfare of a country.
+Subsequently, the central aspect of this paper was addressed, by highlighting a positive causal relationship between monetary resources devoted to research, education and the development of TFP.
 
 
 
